@@ -20,12 +20,12 @@ namespace PrasentationLayer.Controllers
         [Authorize(Roles ="Employee")]
         public async Task<ActionResult> AddComplient(ComplientBox comp) => Ok(await _services.AddComplient(comp));
         [HttpGet("GetById")]
-        [Authorize(Roles ="Employee")]
-        [Authorize(Roles ="Admin")]
+       // [Authorize(Roles ="Employee")]
+        //[Authorize(Roles ="Admin")]
         public async Task<ActionResult> GetComplientList([FromQuery] string id) => Ok(await _services.RequestedByEmployee(id));
 
         [HttpGet("GetAllRecords")]
-        [Authorize(Roles ="Admin")]
+       // [Authorize(Roles ="Admin")]
         public async Task<ActionResult> GetAllRecords() => Ok(await _services.GetAllComplients());
         [HttpGet("GetByComplientId")]
         [Authorize(Roles ="User")]

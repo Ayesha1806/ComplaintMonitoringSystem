@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.AuthenticationModels
+namespace ComplaintMonitoringSystemMVC.Models
 {
     public class Register
     {

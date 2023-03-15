@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccessLayer.Models
+namespace ComplaintMonitoringSystemMVC.Models
 {
     public partial class ComplientBox
     {
