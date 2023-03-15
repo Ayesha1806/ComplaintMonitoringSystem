@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,11 +32,12 @@ namespace DataAccessLayer.Repository.Services
                 int count = NumberOfComplients(comp.EmployeeId);
                 ComplientBox complient = new ComplientBox()
                 {
+                    ComplientId = 1001,
                     EmployeeId = comp.EmployeeId,
                     Issue = comp.Issue,
                     Status = "Submited",
                     ComplientRaised = count,
-                    Resolution=comp.Resolution,
+                    Resolution="UnderProcessing",
                     ActiveFlag = true,
                     CreatedBy = "Employee",
                     CreatedDate = DateTime.Now,
@@ -94,6 +96,22 @@ namespace DataAccessLayer.Repository.Services
             catch (Exception ex)
             {
                 throw new BadRequest("Something Went Wrong!!!");
+            }
+        }
+
+        public async Task<ComplientBox> GetByComplientId(int Complientid)
+        {
+            try
+            {
+                if (Complientid > 0)
+                {
+                    return _context.ComplientBoxes.FirstOrDefault(x => x.ComplientId == Complientid);
+                }
+                return null;  
+            }
+            catch(Exception e)
+            {
+                throw new BadRequest("Server Error");
             }
         }
     }

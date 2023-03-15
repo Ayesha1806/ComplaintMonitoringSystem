@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalEntity", "GlobalEntit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrasentationLayer", "PrasentationLayer\PrasentationLayer.csproj", "{BB017846-0B72-48F4-BAA6-768123C75C4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTest", "XUnitTest\XUnitTest.csproj", "{3A6561C5-D890-4AB5-802E-DB7875EC024E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BB017846-0B72-48F4-BAA6-768123C75C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB017846-0B72-48F4-BAA6-768123C75C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB017846-0B72-48F4-BAA6-768123C75C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A6561C5-D890-4AB5-802E-DB7875EC024E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A6561C5-D890-4AB5-802E-DB7875EC024E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A6561C5-D890-4AB5-802E-DB7875EC024E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A6561C5-D890-4AB5-802E-DB7875EC024E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

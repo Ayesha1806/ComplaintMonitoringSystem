@@ -27,6 +27,11 @@ namespace BusinessLogicLayer.Repository.Services
             return _services.GetAllComlient();
         }
 
+        public Task<ComplientBox> GetByComplientId(int Complientid)
+        {
+            return _services.GetByComplientId(Complientid);
+        }
+
         public Task<List<ComplientBox>> RequestedByEmployee(string employyeID)
         {
             return _services.RequestedByEmployee(employyeID);
