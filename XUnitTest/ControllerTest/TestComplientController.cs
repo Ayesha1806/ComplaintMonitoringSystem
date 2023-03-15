@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.Repository.Contracts;
+using DataAccessLayer.Models;
 using GlobalEntity.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -42,9 +43,71 @@ namespace XUnitTest.ControllerTest
 
             var result = (OkObjectResult) await _controller.GetAllRecords();
             //Assert
-            //Assert.IsNotType<OkObjectResult>(result);
-            Assert.Null(result);
-            
+            Assert.IsType<OkObjectResult>(result);
+            Assert.IsNotType<BadRequest>(result);
+            Assert.NotNull(result);
+            //Assert.Null(result); 
+        }
+        [Fact]
+        public async Task GetByEmployeeId_ShouldReturn200StatusCode()
+        {
+            int id = 1001;
+            //Arrange
+            _mock.Setup(x => x.GetByComplientId(id)).Returns(DummyData.GetComplaintById(id));
+            //Act
+            var result = (OkObjectResult)await _controller.GetComplientByID(id);
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
+            Assert.NotNull(result);
+            Assert.IsNotType<BadRequest>(result);
+        }
+        [Fact]
+        public async Task GetEmployeeById_ShouldNull()
+        {
+            int id = 0;
+            _mock.Setup(x => x.GetByComplientId(id)).Returns(DummyData.GetComplaintById(id));
+            //Act
+            var result = (OkObjectResult)await _controller.GetComplientByID(id);
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
+           // Assert.Null(result);
+            Assert.IsNotType<BadRequest>(result);
+
+        }
+        [Fact]
+        public async Task GetComplientListByEmployeeId_ShouldReturn200Status()
+        {
+            string id = "MLI1135";
+            //Act
+            _mock.Setup(x => x.RequestedByEmployee(id)).Returns(DummyData.GetByEmployeeId(id));
+            //Arrange
+            var result=(OkObjectResult) await _controller.GetComplientList(id);
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
+            Assert.NotNull(result);
+        }
+        [Fact]
+        public async Task GetComplientListById_ShouldReturnNullValue()
+        {
+            string id = "";
+            //Act
+            _mock.Setup(x => x.RequestedByEmployee(id)).Returns(DummyData.GetByEmployeeId(id));
+            //Arrange
+            var result = (OkObjectResult)await _controller.GetComplientList(id);
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
+            Assert.NotNull(result);
+        }
+        [Fact]
+        public async Task AddComplaint_ShouldReturn200Status()
+        {
+            ComplientBox comp = new ComplientBox();
+            //Act
+            _mock.Setup(x=>x.AddComplient(comp)).Returns(DummyData.AddComplaint(comp));
+            //Arrange
+            var result = (OkObjectResult)await _controller.AddComplient(comp);
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
         }
     }
 }

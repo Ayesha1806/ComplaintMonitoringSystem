@@ -92,7 +92,12 @@ namespace DataAccessLayer.Repository.Services
             _logger.LogDebug(employyeID);
             try
             {
-                return _context.ComplientBoxes.FirstOrDefault(x => x.EmployeeId == employyeID);
+                var data= _context.ComplientBoxes.FirstOrDefault(x => x.EmployeeId == employyeID);
+                if (data != null)
+                {
+                    return data;
+                }
+                return null;
             }
             catch(Exception e)
             {
@@ -130,7 +135,11 @@ namespace DataAccessLayer.Repository.Services
             {
                 string query = $"select * from Complient where EmployeeId='{employyeID}'";
                 var obj = await _context.ComplientBoxes.Where(x => x.EmployeeId == employyeID).ToListAsync();
-                return obj;
+                if(obj != null)
+                {
+                    return obj;
+                }
+                return null;
             }
             catch (Exception e)
             {

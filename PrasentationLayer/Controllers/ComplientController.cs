@@ -29,7 +29,7 @@ namespace PrasentationLayer.Controllers
         public async Task<ActionResult> GetAllRecords() => Ok(await _services.GetAllComplients());
         [HttpGet("GetByComplientId")]
         [Authorize(Roles ="User")]
-        public async Task<ActionResult> GetComplientByID(int id) => Ok(await _services.GetAllComplients());
+        public async Task<ActionResult> GetComplientByID(int id) => Ok(await _services.GetByComplientId(id));
 
     }
 }
