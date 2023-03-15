@@ -3,11 +3,13 @@ using DataAccessLayer.Models;
 using DataAccessLayer.Repository.Contracts;
 using GlobalEntity.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,8 +29,8 @@ namespace DataAccessLayer.Repository.Services
         {
             try
             {
-                _logger.LogInformation("Admin Register");
-                _logger.LogDebug(comp.EmployeeId, comp.Issue, comp.ComplientRaised, comp.Status);
+                _logger.LogInformation("Complient Raised");
+                _logger.LogDebug(comp.EmployeeId, comp.Issue, comp.ComplientRaised, comp.Status,comp.ComplientId,comp.CreatedBy,comp.CreatedDate,comp.ModifiedBy,comp.ModifiedDate);
                 int count = NumberOfComplients(comp.EmployeeId);
                 ComplientBox complient = new ComplientBox()
                 {
@@ -48,59 +50,98 @@ namespace DataAccessLayer.Repository.Services
                 _context.SaveChanges();
                 return complient;
             }
-            catch (BadRequest ex)
+            catch (Exception e)
             {
-                _logger.LogError("Server Error");
+                _logger.LogError(e.Message,e.InnerException,e.StackTrace);
                 throw new BadRequest("Server Error!!!");
             }
         }
         public int NumberOfComplients(string EmployeeID)
         {
-            int count = 0;
-            if (GetByEmployyeID(EmployeeID) == null)
+            _logger.LogInformation("Count of Complients");
+            _logger.LogDebug(EmployeeID);
+            try
             {
-                return 1;
-            }
-            else
-            {
-                var data = _context.ComplientBoxes.ToList();
-                foreach (var complient in data)
+                int count = 0;
+                if (GetByEmployyeID(EmployeeID) == null)
                 {
-                    if (complient.EmployeeId.Equals(EmployeeID))
-                    {
-                        count++;
-                    }
+                    return 1;
                 }
-                return count;
+                else
+                {
+                    var data = _context.ComplientBoxes.ToList();
+                    foreach (var complient in data)
+                    {
+                        if (complient.EmployeeId.Equals(EmployeeID))
+                        {
+                            count++;
+                        }
+                    }
+                    return count;
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, e.StackTrace, e.InnerException);
+                throw new ServerError("Something Went Wrong!!!");
             }
         }
         public ComplientBox GetByEmployyeID(string employyeID)
         {
-            return _context.ComplientBoxes.FirstOrDefault(x => x.EmployeeId == employyeID);
+            _logger.LogInformation("Getting Data ById");
+            _logger.LogDebug(employyeID);
+            try
+            {
+                return _context.ComplientBoxes.FirstOrDefault(x => x.EmployeeId == employyeID);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message, e.InnerException, e.StackTrace);
+                throw new Exception(e.Message, e.InnerException);
+            }
         }
 
         public async Task<List<ComplientBox>> GetAllComlient()
         {
-            return await _context.ComplientBoxes.ToListAsync();
+            _logger.LogInformation("Getting List Of Records");
+
+            try
+            {
+                var data= _context.ComplientBoxes.ToListAsync();
+                if (data != null)
+                {
+                    return await data;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, e.StackTrace, e.InnerException);
+                throw new Exception(e.Message);
+            }
                 
         }
 
         public async Task<List<ComplientBox>> RequestedByEmployee(string employyeID)
         {
+            _logger.LogInformation("By Employee Id Getting id");
+            _logger.LogDebug(employyeID);
             try
             {
                 string query = $"select * from Complient where EmployeeId='{employyeID}'";
                 var obj = await _context.ComplientBoxes.Where(x => x.EmployeeId == employyeID).ToListAsync();
                 return obj;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
+                _logger.LogError(e.Message, e.StackTrace, e.InnerException);
                 throw new BadRequest("Something Went Wrong!!!");
             }
         }
 
         public async Task<ComplientBox> GetByComplientId(int Complientid)
         {
+            _logger.LogInformation("Complient Raised");
             try
             {
                 if (Complientid > 0)
@@ -111,6 +152,7 @@ namespace DataAccessLayer.Repository.Services
             }
             catch(Exception e)
             {
+                _logger.LogError(e.Message, e.InnerException, e.StackTrace);
                 throw new BadRequest("Server Error");
             }
         }

@@ -18,18 +18,18 @@ namespace PrasentationLayer.Controllers
         }
         [HttpPost("AddComplient")]
         [Authorize(Roles ="Employee")]
-        public async Task<IActionResult> AddComplient(ComplientBox comp) => Ok(await _services.AddComplient(comp));
+        public async Task<ActionResult> AddComplient(ComplientBox comp) => Ok(await _services.AddComplient(comp));
         [HttpGet("GetById")]
         [Authorize(Roles ="Employee")]
         [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> GetComplientList([FromQuery] string id) => Ok(await _services.RequestedByEmployee(id));
+        public async Task<ActionResult> GetComplientList([FromQuery] string id) => Ok(await _services.RequestedByEmployee(id));
 
         [HttpGet("GetAllRecords")]
         [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> GetAllRecords() => Ok(await _services.GetAllComplients());
+        public async Task<ActionResult> GetAllRecords() => Ok(await _services.GetAllComplients());
         [HttpGet("GetByComplientId")]
         [Authorize(Roles ="User")]
-        public async Task<IActionResult> GetComplientByID(int id) => Ok(await _services.GetAllComplients());
+        public async Task<ActionResult> GetComplientByID(int id) => Ok(await _services.GetAllComplients());
 
     }
 }

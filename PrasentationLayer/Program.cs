@@ -8,9 +8,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+var logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(builder.Configuration)
+        .Enrich.FromLogContext()
+        .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddDbContext<ComplaintMonitoringSystemContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DBCS")));
 builder.Services.AddScoped<IAuthenticationDataAccessLayer, AuthenticationServicesDataAccessLayer>();
