@@ -1,6 +1,6 @@
 using BusinessLogicLayer.Repository.Contracts;
 using BusinessLogicLayer.Repository.Services;
-using DataAccessLayer.Models;
+using DataAccessLayer.DbContext;
 using DataAccessLayer.Repository.Contracts;
 using DataAccessLayer.Repository.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

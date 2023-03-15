@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace DataAccessLayer.Models
+namespace DataAccessLayer.DbContext
 {
-    public partial class ComplaintMonitoringSystemContext  : IdentityDbContext<IdentityUser>
+    public partial class ComplaintMonitoringSystemContext : IdentityDbContext<IdentityUser>
     {
         public ComplaintMonitoringSystemContext()
         {
