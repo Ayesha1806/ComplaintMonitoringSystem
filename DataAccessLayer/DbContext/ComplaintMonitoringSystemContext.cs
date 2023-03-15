@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using DataAccessLayer.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using DataAccessLayer.Models;
 
 namespace DataAccessLayer.DbContext
 {
@@ -19,7 +19,7 @@ namespace DataAccessLayer.DbContext
         {
         }
 
-        public virtual DbSet<Complient> Complients { get; set; } = null!;
+        public virtual DbSet<ComplientBox> ComplientBoxes { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,28 +33,29 @@ namespace DataAccessLayer.DbContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Complient>(entity =>
+            modelBuilder.Entity<ComplientBox>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.ComplientId);
 
-                entity.ToTable("Complient");
+                entity.ToTable("ComplientBox");
 
-                entity.Property(e => e.CreatedBy).HasMaxLength(20);
+                entity.Property(e => e.ComplientId).ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(50);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("date");
 
-                entity.Property(e => e.EmployeeId).HasMaxLength(20);
+                entity.Property(e => e.EmployeeId).HasMaxLength(50);
 
-                entity.Property(e => e.Issue).HasMaxLength(300);
+                entity.Property(e => e.Issue).HasMaxLength(200);
 
-                entity.Property(e => e.ModifiedBy).HasMaxLength(20);
+                entity.Property(e => e.ModifiedBy).HasMaxLength(50);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("date");
 
-                entity.Property(e => e.Sid).ValueGeneratedOnAdd();
+                entity.Property(e => e.Resolution).HasMaxLength(50);
 
-                entity.Property(e => e.Status).HasMaxLength(50);
+                entity.Property(e => e.Status).HasMaxLength(20);
             });
 
             OnModelCreatingPartial(modelBuilder);
