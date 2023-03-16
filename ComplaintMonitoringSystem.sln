@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrasentationLayer", "Prasen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTest", "XUnitTest\XUnitTest.csproj", "{3A6561C5-D890-4AB5-802E-DB7875EC024E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC", "MVC\MVC.csproj", "{8A2B6229-7978-4357-A026-0744771C5DA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{3A6561C5-D890-4AB5-802E-DB7875EC024E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A6561C5-D890-4AB5-802E-DB7875EC024E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A6561C5-D890-4AB5-802E-DB7875EC024E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A2B6229-7978-4357-A026-0744771C5DA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A2B6229-7978-4357-A026-0744771C5DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A2B6229-7978-4357-A026-0744771C5DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A2B6229-7978-4357-A026-0744771C5DA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
