@@ -40,13 +40,11 @@ namespace XUnitTest.ControllerTest
             //Arrange
             _mock.Setup(x => x.GetAllComplients()).Returns(DummyData.NoContext());
             //Act
-
             var result = (OkObjectResult) await _controller.GetAllRecords();
             //Assert
             Assert.IsType<OkObjectResult>(result);
             Assert.IsNotType<BadRequest>(result);
             Assert.NotNull(result);
-            //Assert.Null(result); 
         }
         [Fact]
         public async Task GetByEmployeeId_ShouldReturn200StatusCode()

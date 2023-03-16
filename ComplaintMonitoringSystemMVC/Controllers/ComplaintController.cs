@@ -88,7 +88,7 @@ namespace ComplaintMonitoringSystemMVC.Controllers
                     HttpContext.Session.SetString("JWToken", jwt.Token);
                 }
             }
-            return Redirect("~/Employee/GetEmployees");
+            return Redirect("~/Complaint/Index");
         }
 
     }
