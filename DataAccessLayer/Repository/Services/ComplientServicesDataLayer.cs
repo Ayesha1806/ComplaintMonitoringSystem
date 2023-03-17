@@ -34,7 +34,7 @@ namespace DataAccessLayer.Repository.Services
                 int count = NumberOfComplients(comp.EmployeeId);
                 ComplientBox complient = new ComplientBox()
                 {
-                    ComplientId = 1001,
+                    ComplientId = 1006,
                     EmployeeId = comp.EmployeeId,
                     Issue = comp.Issue,
                     Status = "Submited",
@@ -62,7 +62,7 @@ namespace DataAccessLayer.Repository.Services
             _logger.LogDebug(EmployeeID);
             try
             {
-                int count = 0;
+                int count = 1;
                 if (GetByEmployyeID(EmployeeID) == null)
                 {
                     return 1;

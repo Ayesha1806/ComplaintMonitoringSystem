@@ -4,12 +4,14 @@ using MVC.Models;
 using Newtonsoft.Json;
 using System.ComponentModel;
 using System.Net.Http.Headers;
+using System.Security.Policy;
 using System.Text;
 
 namespace MVC.Controllers
 {
     public class ComplaintController : Controller
     {
+        //public static string baseUrl=
         ApiUrls _api = new ApiUrls();
         public IActionResult Index()
         {
@@ -37,6 +39,32 @@ namespace MVC.Controllers
                 client.Dispose();
             }
             return View(complient);
+        }
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(Register register)
+        {
+            if (ModelState.IsValid)
+            {
+                string baseURL = "https://localhost:7152/";
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(baseURL);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); string strPayload = JsonConvert.SerializeObject(register);
+                    HttpContent context = new StringContent(strPayload, Encoding.UTF8, "application/json");
+                    var response = client.PostAsync("api/Authentication/Register", context).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return View("~/Complaint/Login");
+                    }
+                }
+            }
+            return View();
         }
         public async Task<IActionResult> LoginUser(Login user)
         {
@@ -76,32 +104,32 @@ namespace MVC.Controllers
            return Redirect("~/Home/Index");
 
         }
-        public ActionResult Create()
+        [HttpGet]
+        public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
         public IActionResult Create(ComplientBox comp)
         {
-            HttpClient client = _api.Initial();
-            try
-            {
-                var postTask = client.PostAsJsonAsync<ComplientBox>("api/Employee/AddEmployee", comp);
-               // client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
-                postTask.Wait();
-                var result = postTask.Result;
+            string baseURL = "https://localhost:7152/";
 
-                RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
+            using (var client = new HttpClient())
             {
-                Ok(ex.Message);
+                client.BaseAddress = new Uri(baseURL);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                string strPayload = JsonConvert.SerializeObject(comp);
+                HttpContent context = new StringContent(strPayload, Encoding.UTF8, "application/json");
+                var token = HttpContext.Session.GetString("JWToken");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var response = client.PostAsync("api/Complient/AddComplient", context).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("GetAllEmployees");
+                }
+                return View(comp);
             }
-            finally
-            {
-                client.Dispose();
-            }
-            return View();
         }
         public async Task<IActionResult> Details(int id)
         {
@@ -127,6 +155,30 @@ namespace MVC.Controllers
             }
             return View(complaint);
         }
-       
+        public async Task<IActionResult> GetByEmployeeId(string id)
+        {
+            HttpClient client = _api.Initial();
+            List<ComplientBox> complient = new List<ComplientBox>();
+            try
+            {
+                HttpResponseMessage res = await client.GetAsync("api/Complient/GetById?id=" + id);
+                if (res.IsSuccessStatusCode)
+                {
+                    var result = res.Content.ReadAsStringAsync().Result;
+                    complient = JsonConvert.DeserializeObject<List<ComplientBox>>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                Ok(ex.Message);
+            }
+            finally
+            {
+                client.Dispose();
+                //complaint = null;
+            }
+            return View(complient);
+        }
+
     }
 }

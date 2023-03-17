@@ -3,29 +3,40 @@
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
 }
+<style>
+.row{
+    padding-left:65%;
+        padding-top:30px;
+}
+</style>
 <h3>Login User</h3>
 <hr />
+<img src=" C:\Users\Ayesha Tabassum\Desktop\Traning\ComplaintMonitoringSystem\MVC\Views\Home\eazeworkpic.png" />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="LoginUser" asp-controller="Complaint">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="from-group">
-                <label asp-for="Username" class="control-label">Username</label>
-                <input asp-for="Username" class="from-control" />
+@*                <label asp-for="Username" class="control-label">Username</label>
+*@                <input asp-for="Username" placeholder="Username" class="from-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <br />
             <div class="from-group">
-                <label asp-for="Password" class="control-label">Password</label>
-                <input asp-for="Password" class="from-control" />
+@*                <label asp-for="Password" class="control-label">Password</label>
+                *@                <input asp-for="Password" placeholder="Password" class="from-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <br />
             <div class="from-group">
                 <input type="submit" value="Login" class="btn btn-primary" />
+                 <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="Register">Register</a>
+            </li>
             </div>
+           
             <label>@Html.Raw(ViewBag.Message)</label>
-
+           
         </form>
     </div>
 </div>
