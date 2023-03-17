@@ -2,6 +2,7 @@
 using MVC.Helper;
 using MVC.Models;
 using Newtonsoft.Json;
+using System.ComponentModel;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -16,39 +17,64 @@ namespace MVC.Controllers
         }
         public async Task<IActionResult> GetComplaints()
         {
-            List<ComplientBox> complient = new List<ComplientBox>();
             HttpClient client = _api.Initial();
-            HttpResponseMessage res = await client.GetAsync("api/Complient/GetAllRecords");
-            if (res.IsSuccessStatusCode)
+            List<ComplientBox> complient = new List<ComplientBox>();
+            try
             {
-                var result = res.Content.ReadAsStringAsync().Result;
-                complient = JsonConvert.DeserializeObject<List<ComplientBox>>(result);
+                HttpResponseMessage res = await client.GetAsync("api/Complient/GetAllRecords");
+                if (res.IsSuccessStatusCode)
+                {
+                    var result = res.Content.ReadAsStringAsync().Result;
+                    complient = JsonConvert.DeserializeObject<List<ComplientBox>>(result);
+                }
             }
-
+            catch (Exception ex)
+            {
+                Ok(ex.Message);
+            }
+            finally
+            {
+                client.Dispose();
+            }
             return View(complient);
         }
         public async Task<IActionResult> LoginUser(Login user)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                StringContent stringContent = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                using (var response = await httpClient.PostAsync("https://localhost:7152/api/Authentication/Login", stringContent))
+                using (var httpClient = new HttpClient())
                 {
-                    string token=await response.Content.ReadAsStringAsync();
-                    if(token=="Invalid credentials")
+                    StringContent stringContent = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                    using (var response = await httpClient.PostAsync("https://localhost:7152/api/Authentication/Login", stringContent))
                     {
-                        ViewBag.Message = "Incorrect UserID or Password!";
-                        return Redirect("~/Home/Index");
+                        string token = await response.Content.ReadAsStringAsync();
+                        if (token == "Invalid credentials")
+                        {
+                            ViewBag.Message = "Incorrect UserID or Password!";
+                            return Redirect("~/Home/Index");
+                        }
+                        HttpContext.Session.SetString("JWToken", token);
                     }
-                    HttpContext.Session.SetString("JWToken", token);
                 }
-                return Redirect("~/Dashboard/Index");
             }
+            catch(Exception ex)
+            {
+                Ok(ex.Message);
+            }
+            return Redirect("~/Dashboard/Index");
         }
         public IActionResult Logoff()
         {
-            HttpContext.Session.Clear();//clrear token
-            return Redirect("~/Home/Index");
+            try
+            {
+                HttpContext.Session.Clear();//clrear token
+            }
+            catch(Exception e)
+            {
+                Ok(e.Message);
+            }
+           return Redirect("~/Home/Index");
+
         }
         public ActionResult Create()
         {
