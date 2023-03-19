@@ -12,6 +12,7 @@ namespace DataAccessLayer.Repository.Contracts
         Task<ComplientBox> AddComplient(ComplientBox comp);
         Task<List<ComplientBox>> RequestedByEmployee(string employyeID);
         Task<List<ComplientBox>> GetAllComlient();
-        Task<ComplientBox> GetByComplientId(int Complientid);
+        Task<ComplientBox> GetByComplientId(string Complientid);
+        Task<Dictionary<string,int>> NumberOfComplaintsRaised(string employyeID);
     }
 }

@@ -32,9 +32,10 @@ namespace DataAccessLayer.Repository.Services
                 _logger.LogInformation("Complient Raised");
                 _logger.LogDebug(comp.EmployeeId, comp.Issue, comp.ComplientRaised, comp.Status,comp.ComplientId,comp.CreatedBy,comp.CreatedDate,comp.ModifiedBy,comp.ModifiedDate);
                 int count = NumberOfComplients(comp.EmployeeId);
+                string guid = Guid.NewGuid().ToString();
                 ComplientBox complient = new ComplientBox()
                 {
-                    ComplientId = 1006,
+                    ComplientId = guid,
                     EmployeeId = comp.EmployeeId,
                     Issue = comp.Issue,
                     Status = "Submited",
@@ -85,6 +86,8 @@ namespace DataAccessLayer.Repository.Services
                 _logger.LogError(e.Message, e.StackTrace, e.InnerException);
                 throw new ServerError("Something Went Wrong!!!");
             }
+           // return Convert.ToInt16($"SELECT Count(EmployeeId) as NumberOfComplaints FROM [dbo].[ComplientBox] WHERE EmployeeId='{EmployeeID}'");
+            
         }
         public ComplientBox GetByEmployyeID(string employyeID)
         {
@@ -148,14 +151,14 @@ namespace DataAccessLayer.Repository.Services
             }
         }
 
-        public async Task<ComplientBox> GetByComplientId(int Complientid)
+        public async Task<ComplientBox> GetByComplientId(string Complientid)
         {
             _logger.LogInformation("Complient Raised");
             try
             {
-                if (Complientid > 0)
+                if (Complientid!=null)
                 {
-                    return _context.ComplientBoxes.FirstOrDefault(x => x.ComplientId == Complientid);
+                    return _context.ComplientBoxes.FirstOrDefault(x => x.ComplientId.Equals(Complientid));
                 }
                 return null;  
             }
@@ -164,6 +167,27 @@ namespace DataAccessLayer.Repository.Services
                 _logger.LogError(e.Message, e.InnerException, e.StackTrace);
                 throw new BadRequest("Server Error");
             }
+        }
+
+        public async Task<Dictionary<string,int>> NumberOfComplaintsRaised(string employyeID)
+        {
+            var dictonary = new Dictionary<string, int>();
+            var data = _context.ComplientBoxes.ToList();
+            while (data != null)
+            {
+                int count = 0;
+                foreach (var complient in data)
+                {
+                    if (complient.EmployeeId.Equals(employyeID))
+                    {
+                        count++;
+                    }
+                }
+                dictonary.Add(employyeID, count);
+                //count = 0;
+            }
+            return dictonary;
+            
         }
     }
 }

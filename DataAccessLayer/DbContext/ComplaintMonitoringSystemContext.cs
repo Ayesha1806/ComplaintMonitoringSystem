@@ -19,6 +19,7 @@ namespace DataAccessLayer.DbContext
         {
         }
 
+
         public virtual DbSet<ComplientBox> ComplientBoxes { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -26,20 +27,22 @@ namespace DataAccessLayer.DbContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=ComplaintMonitoringSystem;Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=ComplaintMonitoringSystem;Integrated Security=True");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<ComplientBox>(entity =>
             {
                 entity.HasKey(e => e.ComplientId);
 
                 entity.ToTable("ComplientBox");
 
-                entity.Property(e => e.ComplientId).ValueGeneratedNever();
+                entity.Property(e => e.ComplientId).HasMaxLength(50);
 
                 entity.Property(e => e.CreatedBy).HasMaxLength(50);
 

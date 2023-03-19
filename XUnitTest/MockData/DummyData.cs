@@ -13,7 +13,7 @@ namespace XUnitTest.MockData
         {
             new ComplientBox()
             {
-                ComplientId=1001,
+                ComplientId="1001",
                 ComplientRaised=1,
                 Issue="desk is not clean",
                 EmployeeId="MLI1135",
@@ -27,7 +27,7 @@ namespace XUnitTest.MockData
             },
              new ComplientBox()
             {
-                ComplientId=1002,
+                ComplientId="1002",
                 ComplientRaised=5,
                 Issue="desk is not clean",
                 EmployeeId="MLI1135",
@@ -41,7 +41,7 @@ namespace XUnitTest.MockData
             },
              new ComplientBox()
             {
-                ComplientId=1002,
+                ComplientId="1002",
                 ComplientRaised=5,
                 Issue="desk is not clean",
                 EmployeeId="MLI1135",
@@ -62,7 +62,7 @@ namespace XUnitTest.MockData
                 {
                     EmployeeId="MLI1135",
                     Issue="Issue with system",
-                    ComplientId=1001,
+                    ComplientId="jhgu",
                     ComplientRaised=1,
                     Resolution="Processing",
                     Status="sublited",
@@ -80,7 +80,7 @@ namespace XUnitTest.MockData
         {
             return null;
         }
-        public async static Task<ComplientBox> GetComplaintById(int id)
+        public async static Task<ComplientBox> GetComplaintById(string id)
         {
             //List<ComplientBox> comp =  GetComplaints();
             var Data= data.FirstOrDefault(x=>x.ComplientId==id);
@@ -108,7 +108,7 @@ namespace XUnitTest.MockData
                 Issue = "Issue with laptop",
                 Status = "Submited",
                 ActiveFlag = true,
-                ComplientId = 1002,
+                ComplientId = "1002",
                 ComplientRaised = 2,
                 Resolution = "Processing",
                 CreatedBy = "Employee",

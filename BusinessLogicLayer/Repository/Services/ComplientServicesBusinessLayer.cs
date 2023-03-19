@@ -27,9 +27,14 @@ namespace BusinessLogicLayer.Repository.Services
             return _services.GetAllComlient();
         }
 
-        public Task<ComplientBox> GetByComplientId(int Complientid)
+        public Task<ComplientBox> GetByComplientId(string Complientid)
         {
             return _services.GetByComplientId(Complientid);
+        }
+
+        public Task<Dictionary<string, int>> NumberOfComplaintsRaised(string employyeID)
+        {
+            return _services.NumberOfComplaintsRaised(employyeID);
         }
 
         public Task<List<ComplientBox>> RequestedByEmployee(string employyeID)

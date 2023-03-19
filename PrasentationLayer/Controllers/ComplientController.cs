@@ -18,7 +18,7 @@ namespace PrasentationLayer.Controllers
         }
         [HttpPost("AddComplient")]
         //[Authorize(Roles ="Employee")]
-        public async Task<ActionResult> AddComplient(ComplientBox comp) => Ok(await _services.AddComplient(comp));
+        public async Task<ActionResult<ComplientBox>> AddComplient(ComplientBox comp) => Ok(await _services.AddComplient(comp));
         [HttpGet("GetById")]
        // [Authorize(Roles ="Employee")]
         //[Authorize(Roles ="Admin")]
@@ -29,7 +29,9 @@ namespace PrasentationLayer.Controllers
         public async Task<ActionResult> GetAllRecords() => Ok(await _services.GetAllComplients());
         [HttpGet("GetByComplientId")]
        // [Authorize(Roles ="User")]
-        public async Task<ActionResult> GetComplientByID(int id) => Ok(await _services.GetByComplientId(id));
+        public async Task<ActionResult> GetComplientByID(string id) => Ok(await _services.GetByComplientId(id));
+        [HttpGet("CountOfComplaints")]
+        public async Task<ActionResult> GetCount(string id)=>Ok(_services.NumberOfComplaintsRaised(id));
 
     }
 }

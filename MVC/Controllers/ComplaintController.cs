@@ -1,22 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using com.sun.net.ssl.@internal.www.protocol.https;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.TestHost;
 using MVC.Helper;
 using MVC.Models;
 using Newtonsoft.Json;
+using NServiceBus.Testing;
 using System.ComponentModel;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Policy;
 using System.Text;
+using System.Text.Json.Nodes;
 
 namespace MVC.Controllers
 {
     public class ComplaintController : Controller
     {
-        //public static string baseUrl=
+        //ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;  
+       
         ApiUrls _api = new ApiUrls();
         public IActionResult Index()
         {
             return View();
         }
+       
         public async Task<IActionResult> GetComplaints()
         {
             HttpClient client = _api.Initial();
@@ -66,6 +73,7 @@ namespace MVC.Controllers
             }
             return View();
         }
+
         public async Task<IActionResult> LoginUser(Login user)
         {
             try
@@ -104,33 +112,33 @@ namespace MVC.Controllers
            return Redirect("~/Home/Index");
 
         }
-        [HttpGet]
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
         [HttpPost]
         public IActionResult Create(ComplientBox comp)
         {
-            string baseURL = "https://localhost:7152/";
-
-            using (var client = new HttpClient())
+            HttpClient client = _api.Initial();
+            try
             {
-                client.BaseAddress = new Uri(baseURL);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                string strPayload = JsonConvert.SerializeObject(comp);
-                HttpContent context = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                var token = HttpContext.Session.GetString("JWToken");
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var response = client.PostAsync("api/Complient/AddComplient", context).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("GetAllEmployees");
-                }
-                return View(comp);
+                var postTask = client.PostAsJsonAsync<ComplientBox>("api/Complient/AddComplient", comp);
+                postTask.Wait();
+                var result=postTask.Result;
+                RedirectToAction(nameof(GetComplaints));
             }
+            catch(Exception ex)
+            {
+               Ok(ex.Message);
+            }
+            finally
+            {
+                client.Dispose();
+            }
+            return View();
         }
+
+
         public async Task<IActionResult> Details(int id)
         {
             HttpClient client = _api.Initial();

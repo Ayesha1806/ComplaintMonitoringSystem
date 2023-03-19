@@ -5,7 +5,7 @@ namespace DataAccessLayer.Models
 {
     public partial class ComplientBox
     {
-        public int ComplientId { get; set; }
+        public string ComplientId { get; set; } = null!;
         public string EmployeeId { get; set; } = null!;
         public string Issue { get; set; } = null!;
         public int ComplientRaised { get; set; }
