@@ -32,6 +32,8 @@ namespace PrasentationLayer.Controllers
         public async Task<ActionResult> GetComplientByID(string id) => Ok(await _services.GetByComplientId(id));
         [HttpGet("CountOfComplaints")]
         public async Task<ActionResult> GetCount(string id)=>Ok(_services.NumberOfComplaintsRaised(id));
+        [HttpGet("GetAllEmployess")]
+        public async Task<ActionResult> GetAllEmployees()=>Ok(await _services.GetAllEmployees());
 
     }
 }

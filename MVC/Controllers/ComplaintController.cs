@@ -17,13 +17,13 @@ namespace MVC.Controllers
     public class ComplaintController : Controller
     {
         //ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;  
-       
+
         ApiUrls _api = new ApiUrls();
         public IActionResult Index()
         {
             return View();
         }
-       
+
         public async Task<IActionResult> GetComplaints()
         {
             HttpClient client = _api.Initial();
@@ -47,33 +47,7 @@ namespace MVC.Controllers
             }
             return View(complient);
         }
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Register(Register register)
-        {
-            if (ModelState.IsValid)
-            {
-                string baseURL = "https://localhost:7152/";
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(baseURL);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); string strPayload = JsonConvert.SerializeObject(register);
-                    HttpContent context = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                    var response = client.PostAsync("api/Authentication/Register", context).Result;
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return View("~/Complaint/Login");
-                    }
-                }
-            }
-            return View();
-        }
-
+       
         public async Task<IActionResult> LoginUser(Login user)
         {
             try
@@ -93,7 +67,7 @@ namespace MVC.Controllers
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Ok(ex.Message);
             }
@@ -105,11 +79,11 @@ namespace MVC.Controllers
             {
                 HttpContext.Session.Clear();//clrear token
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Ok(e.Message);
             }
-           return Redirect("~/Home/Index");
+            return Redirect("~/Home/Index");
 
         }
         public ActionResult Create()
@@ -124,12 +98,12 @@ namespace MVC.Controllers
             {
                 var postTask = client.PostAsJsonAsync<ComplientBox>("api/Complient/AddComplient", comp);
                 postTask.Wait();
-                var result=postTask.Result;
+                var result = postTask.Result;
                 RedirectToAction(nameof(GetComplaints));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               Ok(ex.Message);
+                Ok(ex.Message);
             }
             finally
             {
@@ -139,7 +113,7 @@ namespace MVC.Controllers
         }
 
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(string id)
         {
             HttpClient client = _api.Initial();
             var complaint = new ComplientBox();
@@ -187,6 +161,56 @@ namespace MVC.Controllers
             }
             return View(complient);
         }
+        public async Task<IActionResult> GetComplaintCount(string id)
+        {
+            HttpClient client = _api.Initial();
+            Dictionary<string, int> complient = new Dictionary<string, int>();
+            try
+            {
+                HttpResponseMessage res = await client.GetAsync("api/Complient/CountOfComplaints?id=" + id);
+                if (res.IsSuccessStatusCode)
+                {
+                    var result = res.Content.ReadAsStringAsync().Result;
+                    // complient = JsonConvert.DeserializeObject<Dictionary<string,int>>(result);
+                    // ViewBag.result=result;
+                    //complient.Add()
+                    return View(complient);
+                }
+            }
+            catch (Exception ex)
+            {
+                Ok(ex.Message);
+            }
+            finally
+            {
+                client.Dispose();
+                //complaint = null;
+            }
+            return View(complient);
+        }
+        public async Task<IActionResult> EmployeeComplients()
+        {
+            HttpClient client = _api.Initial();
+            List<ComplientBox> complient = new List<ComplientBox>();
+            try
+            {
+                HttpResponseMessage res = await client.GetAsync("api/Complient/GetAllEmployess");
+                if (res.IsSuccessStatusCode)
+                {
+                    var result = res.Content.ReadAsStringAsync().Result;
+                    complient = JsonConvert.DeserializeObject<List<ComplientBox>>(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                Ok(ex.Message);
+            }
+            finally
+            {
+                client.Dispose();
+            }
+            return View(complient);
 
+        }
     }
 }

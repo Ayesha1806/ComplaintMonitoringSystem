@@ -173,8 +173,7 @@ namespace DataAccessLayer.Repository.Services
         {
             var dictonary = new Dictionary<string, int>();
             var data = _context.ComplientBoxes.ToList();
-            while (data != null)
-            {
+           
                 int count = 0;
                 foreach (var complient in data)
                 {
@@ -184,10 +183,36 @@ namespace DataAccessLayer.Repository.Services
                     }
                 }
                 dictonary.Add(employyeID, count);
-                //count = 0;
-            }
+                count = 0;
+            
             return dictonary;
             
+        }
+
+        public async Task<IEnumerable<ComplientBox>> GetAllEmployees()
+        {
+            try
+            {
+                List<ComplientBox> list = new List<ComplientBox>();
+                var data = _context.ComplientBoxes.ToList();
+               //return data.Union(data);
+                //var terms = .Split(' ').ToList();
+                foreach (ComplientBox u1 in data)
+                {
+                    bool duplicatefound = false;
+                    foreach (ComplientBox u2 in list)
+                        if (u1.EmployeeId == u2.EmployeeId)
+                            duplicatefound = true;
+
+                    if (!duplicatefound)
+                        list.Add(u1);
+                }
+                return list.DistinctBy(i => i.EmployeeId).ToList();
+            }
+            catch (Exception e)
+            {
+                throw new BadRequest("Server Error!!!");
+            }
         }
     }
 }

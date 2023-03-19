@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Serilog;
 using System.Text;
 
@@ -24,6 +25,7 @@ builder.Services.AddScoped<IAuthenticationDataAccessLayer, AuthenticationService
 builder.Services.AddScoped<IAuthenticationBusinessLayer, AuthenticationServicesBusinessLayer>();
 builder.Services.AddScoped<IComplientDataAccessLayer,ComplientServicesDataLayer>();
 builder.Services.AddScoped<IComplientBusinessLayercs, ComplientServicesBusinessLayer>();
+builder.Services.AddMvc().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ComplaintMonitoringSystemContext>()
     .AddDefaultTokenProviders();

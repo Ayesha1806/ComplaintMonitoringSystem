@@ -1,0 +1,24 @@
+﻿@model Dictionary<string,int>
+
+@{
+    ViewData["Title"] = "GetComplaintCount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>GetComplaintCount</h1>
+
+<div>
+    <h4>ComplientBox</h4>
+   <dl>
+        @foreach(KeyValuePair<string,int> item in Model)
+        {
+            <dt>@item.Key</dt>
+            <dd>@item.Value</dd>
+        }
+    </dl>
+    
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

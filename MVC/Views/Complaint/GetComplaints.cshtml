@@ -12,9 +12,9 @@
     <title>GetComplaints</title>
 </head>
 <body>
-<p>
+@*<p>
     <a asp-action="Create">Create New</a>
-</p>
+</p>*@
 <table class="table">
     <thead>
         <tr>
@@ -36,7 +36,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Resolution)
             </th>
-           @* <th>
+            <th>
                 @Html.DisplayNameFor(model => model.ActiveFlag)
             </th>
             <th>
@@ -50,7 +50,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ModifiedDate)
-            </th>*@
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -75,28 +75,25 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Resolution)
             </td>
-           @* <td>
-                @Html.DisplayFor(modelItem => item.ActiveFlag)
+            <td>
+                @Html.DisplayFor(modelitem => item.ActiveFlag)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
+                @Html.DisplayFor(modelitem => item.CreatedBy)
+             </td>
+            <td>
+              @Html.DisplayFor(modelitem => item.CreatedDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
+             @Html.DisplayFor(modelitem => item.ModifiedBy)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModifiedBy)
-            </td>
+             @Html.DisplayFor(modelitem => item.ModifiedDate)
+             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>*@
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ComplientId }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.ComplientId }) |
-                @Html.ActionLink("Details", "GetByEmployeeId", new {  id=item.EmployeeId }) |
-
-                @Html.ActionLink("Delete", "Delete", new { id=item.ComplientId })
-            </td>
+              
+                @Html.ActionLink("ByComplientId", "Details", new {  id=item.ComplientId }) 
+              </td>
         </tr>
 }
     </tbody>
