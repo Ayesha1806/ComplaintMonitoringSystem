@@ -15,12 +15,12 @@ namespace XUnitTest.ControllerTest
 {
     public class TestComplientController
     {
-        private readonly Mock<IComplientBusinessLayercs> _mock;
-        private readonly ComplientController _controller;
+        private readonly Mock<IComplaintBusinessLayercs> _mock;
+        private readonly ComplaintController _controller;
         public TestComplientController()
         {
-            _mock=new Mock<IComplientBusinessLayercs>();
-            _controller=new ComplientController(_mock.Object);
+            _mock=new Mock<IComplaintBusinessLayercs>();
+            _controller=new ComplaintController(_mock.Object);
         }
         [Fact]
         public async Task GetAll_ShouldReturn200StatusCode()

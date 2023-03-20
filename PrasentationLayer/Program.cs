@@ -23,8 +23,8 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddDbContext<ComplaintMonitoringSystemContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DBCS")));
 builder.Services.AddScoped<IAuthenticationDataAccessLayer, AuthenticationServicesDataAccessLayer>();
 builder.Services.AddScoped<IAuthenticationBusinessLayer, AuthenticationServicesBusinessLayer>();
-builder.Services.AddScoped<IComplientDataAccessLayer,ComplientServicesDataLayer>();
-builder.Services.AddScoped<IComplientBusinessLayercs, ComplientServicesBusinessLayer>();
+builder.Services.AddScoped<IComplaintDataAccessLayer,ComplaintServicesDataLayer>();
+builder.Services.AddScoped<IComplaintBusinessLayercs, ComplaintServicesBusinessLayer>();
 builder.Services.AddMvc().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ComplaintMonitoringSystemContext>()
