@@ -15,11 +15,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repository.Services
 {
-    public class ComplientServicesDataLayer :IComplientDataAccessLayer
+    public class ComplaintServicesDataLayer :IComplaintDataAccessLayer
     {
         private readonly ComplaintMonitoringSystemContext _context;
         private readonly ILogger<ComplaintMonitoringSystemContext> _logger;
-        public ComplientServicesDataLayer(ComplaintMonitoringSystemContext context,ILogger<ComplaintMonitoringSystemContext> logger)
+        public ComplaintServicesDataLayer(ComplaintMonitoringSystemContext context,ILogger<ComplaintMonitoringSystemContext> logger)
         {
             _context = context;
             _logger = logger;

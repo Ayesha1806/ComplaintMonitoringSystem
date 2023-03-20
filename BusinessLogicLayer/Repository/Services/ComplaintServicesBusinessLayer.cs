@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Repository.Services
 {
-    public class ComplientServicesBusinessLayer : IComplientBusinessLayercs
+    public class ComplaintServicesBusinessLayer : IComplaintBusinessLayercs
     {
-        private readonly IComplientDataAccessLayer _services;
-        public ComplientServicesBusinessLayer(IComplientDataAccessLayer services)
+        private readonly IComplaintDataAccessLayer _services;
+        public ComplaintServicesBusinessLayer(IComplaintDataAccessLayer services)
         {
             _services = services;
         }

@@ -31,6 +31,7 @@ namespace DataAccessLayer.Repository.Services
             _configuration = configuration;
             _logger = logger;
         }
+
         public async Task<string> Register(Register model)
         {
             try
@@ -67,7 +68,7 @@ namespace DataAccessLayer.Repository.Services
                     case "User":
                         await _userManager.AddToRoleAsync(user, UserRoles.User);
                         break;
-                    case "Master":
+                    case "Employee":
                         await _userManager.AddToRoleAsync(user, UserRoles.Employee);
                         break;
                     default:

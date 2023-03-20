@@ -33,7 +33,7 @@ namespace MVC.Controllers
             {
                 var accessToken = HttpContext.Session.GetString("JWToken");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                HttpResponseMessage res = await client.GetAsync("api/Complient/GetAllRecords");
+                HttpResponseMessage res = await client.GetAsync("api/Complaint/GetAllRecords");
                 if (res.IsSuccessStatusCode)
                 {
                     var result = res.Content.ReadAsStringAsync().Result;
@@ -51,6 +51,8 @@ namespace MVC.Controllers
             return View(complient);
         }
        
+       
+
         public async Task<IActionResult> LoginUser(Login user)
         {
             try
@@ -98,7 +100,9 @@ namespace MVC.Controllers
         public IActionResult Create(ComplientBox comp)
         {
             HttpClient client = _api.Initial();
-            var postTask = client.PostAsJsonAsync<ComplientBox>("api/Complient/RaiseComplient", comp);
+            var accessToken = HttpContext.Session.GetString("JWToken");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var postTask = client.PostAsJsonAsync<ComplientBox>("api/Complaint/RaiseComplient", comp);
             var result=postTask.Result;
             if(result.IsSuccessStatusCode)
             {
@@ -109,10 +113,12 @@ namespace MVC.Controllers
             public async Task<IActionResult> Details(string id)
         {
             HttpClient client = _api.Initial();
+            var accessToken = HttpContext.Session.GetString("JWToken");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var complaint = new ComplientBox();
             try
             {
-                HttpResponseMessage res = await client.GetAsync("api/Complient/GetByComplientId?id=" + id);
+                HttpResponseMessage res = await client.GetAsync("api/Complaint/GetById?id=" + id);
                 if (res.IsSuccessStatusCode)
                 {
                     var result = res.Content.ReadAsStringAsync().Result;
@@ -133,10 +139,12 @@ namespace MVC.Controllers
         public async Task<IActionResult> GetByEmployeeId(string id)
         {
             HttpClient client = _api.Initial();
+            var accessToken = HttpContext.Session.GetString("JWToken");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             List<ComplientBox> complient = new List<ComplientBox>();
             try
             {
-                HttpResponseMessage res = await client.GetAsync("api/Complient/GetById?id=" + id);
+                HttpResponseMessage res = await client.GetAsync("api/Complaint/GetById?id=" + id);
                 if (res.IsSuccessStatusCode)
                 {
                     var result = res.Content.ReadAsStringAsync().Result;
@@ -157,6 +165,7 @@ namespace MVC.Controllers
         public async Task<IActionResult> GetComplaintCount(string id)
         {
             HttpClient client = _api.Initial();
+            
             Dictionary<string, int> complient = new Dictionary<string, int>();
             try
             {
@@ -184,10 +193,12 @@ namespace MVC.Controllers
         public async Task<IActionResult> EmployeeComplients()
         {
             HttpClient client = _api.Initial();
+            var accessToken = HttpContext.Session.GetString("JWToken");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             List<ComplientBox> complient = new List<ComplientBox>();
             try
             {
-                HttpResponseMessage res = await client.GetAsync("api/Complient/GetAllEmployess");
+                HttpResponseMessage res = await client.GetAsync("api/Complaint/GetAllEmployess");
                 if (res.IsSuccessStatusCode)
                 {
                     var result = res.Content.ReadAsStringAsync().Result;

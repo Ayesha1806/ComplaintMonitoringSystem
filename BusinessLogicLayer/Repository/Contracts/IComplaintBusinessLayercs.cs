@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Repository.Contracts
 {
-    public interface IComplientBusinessLayercs
+    public interface IComplaintBusinessLayercs
     {
         Task<ComplientBox> AddComplient(ComplientBox comp);
         Task<List<ComplientBox>> RequestedByEmployee(string employyeID);

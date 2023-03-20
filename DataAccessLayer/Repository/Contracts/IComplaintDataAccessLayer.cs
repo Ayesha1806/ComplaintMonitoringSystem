@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repository.Contracts
 {
-    public interface IComplientDataAccessLayer
+    public interface IComplaintDataAccessLayer
     {
         Task<ComplientBox> AddComplient(ComplientBox comp);
         Task<List<ComplientBox>> RequestedByEmployee(string employyeID);

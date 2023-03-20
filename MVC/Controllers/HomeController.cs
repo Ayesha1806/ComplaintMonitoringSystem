@@ -32,7 +32,7 @@ namespace MVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-       
+
         public IActionResult Register()
         {
             return View();
@@ -47,21 +47,22 @@ namespace MVC.Controllers
                 {
                     client.BaseAddress = new Uri(baseURL);
                     client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); string strPayload = JsonConvert.SerializeObject(register);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    string strPayload = JsonConvert.SerializeObject(register);
                     HttpContent context = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                    var response = client.PostAsync("api/Authenticate/register", context).Result;
+                    var response = client.PostAsync("api/Authentication/Register", context).Result;
                     if (response.IsSuccessStatusCode)
                     {
-                        return View("SecondPage");
+                        return Redirect("~/Complaint/LoginUser");
                     }
                 }
             }
             return View();
         }
 
-        
 
- 
+
+
 
 
     }
