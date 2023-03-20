@@ -104,7 +104,7 @@ namespace DataAccessLayer.Repository.Services
                     var token = GetToken(authClaims);
                     TokenResponse tokenResponse = new TokenResponse();
                     tokenResponse.Token = new JwtSecurityTokenHandler().WriteToken(token);
-                    tokenResponse.Expire = DateTime.UtcNow.AddMinutes(30);
+                    //tokenResponse.Expire = token.ValidTo;
                     return tokenResponse;
                 }
                 return null;

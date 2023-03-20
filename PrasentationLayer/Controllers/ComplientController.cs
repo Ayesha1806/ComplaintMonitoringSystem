@@ -16,7 +16,7 @@ namespace PrasentationLayer.Controllers
         {
             _services = services;
         }
-        [HttpPost("AddComplient")]
+        [HttpPost("RaiseComplient")]
         //[Authorize(Roles ="Employee")]
         public async Task<ActionResult<ComplientBox>> AddComplient(ComplientBox comp) => Ok(await _services.AddComplient(comp));
         [HttpGet("GetById")]

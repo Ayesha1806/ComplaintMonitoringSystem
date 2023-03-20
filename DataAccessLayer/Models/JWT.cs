@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.AuthenticationModels
+namespace DataAccessLayer.Models
 {
-    public class TokenResponse
+    public class JWT
     {
         public string? Token { get; set; }
-       // public DateTime Expire { get; set; }
     }
-    
 }

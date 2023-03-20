@@ -5,7 +5,7 @@ namespace MVC.Models
 {
     public partial class ComplientBox
     {
-        public string? ComplientId { get; set; }
+        public string ComplientId { get; set; } = null!;
         public string EmployeeId { get; set; } = null!;
         public string Issue { get; set; } = null!;
         public int ComplientRaised { get; set; }

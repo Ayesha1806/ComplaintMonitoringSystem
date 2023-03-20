@@ -1,4 +1,5 @@
 ﻿using com.sun.net.ssl.@internal.www.protocol.https;
+using com.sun.security.ntlm;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
 using MVC.Helper;
@@ -17,7 +18,7 @@ namespace MVC.Controllers
     public class ComplaintController : Controller
     {
         //ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;  
-
+        public static string bseurl = "https://localhost:7152/";
         ApiUrls _api = new ApiUrls();
         public IActionResult Index()
         {
@@ -26,10 +27,12 @@ namespace MVC.Controllers
 
         public async Task<IActionResult> GetComplaints()
         {
-            HttpClient client = _api.Initial();
+            HttpClient client =_api.Initial();
             List<ComplientBox> complient = new List<ComplientBox>();
             try
             {
+                var accessToken = HttpContext.Session.GetString("JWToken");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                 HttpResponseMessage res = await client.GetAsync("api/Complient/GetAllRecords");
                 if (res.IsSuccessStatusCode)
                 {
@@ -58,12 +61,13 @@ namespace MVC.Controllers
                     using (var response = await httpClient.PostAsync("https://localhost:7152/api/Authentication/Login", stringContent))
                     {
                         string token = await response.Content.ReadAsStringAsync();
-                        if (token == "Invalid credentials")
+                        JWT jwt = JsonConvert.DeserializeObject<JWT>(token);
+                        if (jwt.Token == "Invalid credentials")
                         {
                             ViewBag.Message = "Incorrect UserID or Password!";
                             return Redirect("~/Home/Index");
                         }
-                        HttpContext.Session.SetString("JWToken", token);
+                        HttpContext.Session.SetString("JWToken", jwt.Token);
                     }
                 }
             }
@@ -94,26 +98,15 @@ namespace MVC.Controllers
         public IActionResult Create(ComplientBox comp)
         {
             HttpClient client = _api.Initial();
-            try
+            var postTask = client.PostAsJsonAsync<ComplientBox>("api/Complient/RaiseComplient", comp);
+            var result=postTask.Result;
+            if(result.IsSuccessStatusCode)
             {
-                var postTask = client.PostAsJsonAsync<ComplientBox>("api/Complient/AddComplient", comp);
-                postTask.Wait();
-                var result = postTask.Result;
-                RedirectToAction(nameof(GetComplaints));
-            }
-            catch (Exception ex)
-            {
-                Ok(ex.Message);
-            }
-            finally
-            {
-                client.Dispose();
+                return RedirectToAction("GetComplaints");
             }
             return View();
         }
-
-
-        public async Task<IActionResult> Details(string id)
+            public async Task<IActionResult> Details(string id)
         {
             HttpClient client = _api.Initial();
             var complaint = new ComplientBox();
