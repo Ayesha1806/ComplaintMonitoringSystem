@@ -207,7 +207,8 @@ namespace DataAccessLayer.Repository.Services
                     if (!duplicatefound)
                         list.Add(u1);
                 }
-                return list.DistinctBy(i => i.EmployeeId).ToList();
+                return list;
+                //return list.DistinctBy(i => i.EmployeeId).ToList();
             }
             catch (Exception e)
             {

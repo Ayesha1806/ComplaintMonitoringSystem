@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -116,6 +117,37 @@ namespace XUnitTest.MockData
                 ModifiedBy = null,
                 ModifiedDate = null
             };
+        }
+        public async static Task<ComplientBox> AddComplaintBadRequest(ComplientBox comp)
+        {
+            return new ComplientBox
+            {
+                EmployeeId = "MLI1135",
+                Issue = "Issue with laptop",
+                Status = "Submited",
+                ActiveFlag = true,
+                ComplientId = "1002",
+                Resolution = "Processing",
+                CreatedBy = "Employee",
+                CreatedDate = DateTime.Now,
+                ModifiedBy = null,
+                ModifiedDate = null
+            };
+        }
+        public async static Task<List<ComplientBox>> RemoveDuplicate()
+        {
+            List<ComplientBox> list = new List<ComplientBox>();
+            foreach (ComplientBox u1 in data)
+            {
+                bool duplicatefound = false;
+                foreach (ComplientBox u2 in list)
+                    if (u1.EmployeeId == u2.EmployeeId)
+                        duplicatefound = true;
+
+                if (!duplicatefound)
+                    list.Add(u1);
+            }
+            return list;
         }
     }
 }

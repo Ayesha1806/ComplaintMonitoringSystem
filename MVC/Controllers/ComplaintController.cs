@@ -106,7 +106,7 @@ namespace MVC.Controllers
             var result=postTask.Result;
             if(result.IsSuccessStatusCode)
             {
-                return RedirectToAction("GetComplaints");
+                return RedirectToAction("EmployeeComplients");
             }
             return View();
         }

@@ -19,16 +19,16 @@ namespace XUnitTest.ControllerTest
         private readonly ComplaintController _controller;
         public TestComplientController()
         {
-            _mock=new Mock<IComplaintBusinessLayercs>();
-            _controller=new ComplaintController(_mock.Object);
+            _mock = new Mock<IComplaintBusinessLayercs>();
+            _controller = new ComplaintController(_mock.Object);
         }
         [Fact]
         public async Task GetAll_ShouldReturn200StatusCode()
         {
             //Arrange
-            _mock.Setup(x=>x.GetAllComplients()).Returns(DummyData.GetAllRecords());
+            _mock.Setup(x => x.GetAllComplients()).Returns(DummyData.GetAllRecords());
             //Act
-            var result= (OkObjectResult) await _controller.GetAllRecords();
+            var result = (OkObjectResult)await _controller.GetAllRecords();
             //Assert
             Assert.NotNull(result);
             Assert.IsType<OkObjectResult>(result);
@@ -40,7 +40,7 @@ namespace XUnitTest.ControllerTest
             //Arrange
             _mock.Setup(x => x.GetAllComplients()).Returns(DummyData.NoContext());
             //Act
-            var result = (OkObjectResult) await _controller.GetAllRecords();
+            var result = (OkObjectResult)await _controller.GetAllRecords();
             //Assert
             Assert.IsType<OkObjectResult>(result);
             Assert.IsNotType<BadRequest>(result);
@@ -62,13 +62,13 @@ namespace XUnitTest.ControllerTest
         [Fact]
         public async Task GetEmployeeById_ShouldNull()
         {
-            string id ="";
+            string id = "";
             _mock.Setup(x => x.GetByComplientId(id)).Returns(DummyData.GetComplaintById(id));
             //Act
             var result = (OkObjectResult)await _controller.GetComplientByID(id);
             //Assert
             Assert.IsType<OkObjectResult>(result);
-           // Assert.Null(result);
+            // Assert.Null(result);
             Assert.IsNotType<BadRequest>(result);
 
         }
@@ -79,7 +79,7 @@ namespace XUnitTest.ControllerTest
             //Act
             _mock.Setup(x => x.RequestedByEmployee(id)).Returns(DummyData.GetByEmployeeId(id));
             //Arrange
-            var result=(OkObjectResult) await _controller.GetComplientList(id);
+            var result = (OkObjectResult)await _controller.GetComplientList(id);
             //Assert
             Assert.IsType<OkObjectResult>(result);
             Assert.NotNull(result);
@@ -96,16 +96,54 @@ namespace XUnitTest.ControllerTest
             Assert.IsType<OkObjectResult>(result);
             Assert.NotNull(result);
         }
-        //[Fact]
-        //public async Task AddComplaint_ShouldReturn200Status()
-        //{
-        //    ComplientBox comp = new ComplientBox();
-        //    //Act
-        //    _mock.Setup(x=>x.AddComplient(comp)).Returns(DummyData.AddComplaint(comp));
-        //    //Arrange
-        //   // var result = (OkObjectResult)await _controller.AddComplient(comp);
-        //    //Assert
-        //    //Assert.IsType<OkObjectResult>(result);
-        //}
+        [Fact]
+        public async Task AddComplaint_ShouldReturn200Status()
+        {
+            ComplientBox comp = new ComplientBox();
+            //Act
+            _mock.Setup(x => x.AddComplient(comp)).Returns(DummyData.AddComplaint(comp));
+            //Arrange
+            //var result = (OkObjectResult) await _controller.AddComplient(comp);
+            var result = (OkObjectResult)await _controller.AddComplient(comp);
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
+            [Fact]
+            async Task AddComplaint_ShouldReturn400Status()
+            {
+            ComplientBox comp = new ComplientBox()
+            {
+                Issue = "Issue with laptop",
+                Status = "Submited",
+                ActiveFlag = true,
+                ComplientId = "1002",
+                ComplientRaised = 2,
+                Resolution = "Processing",
+                CreatedBy = "Employee",
+                CreatedDate = DateTime.Now,
+                ModifiedBy = null,
+                ModifiedDate = null
+            };
+                //Act
+                _mock.Setup(x => x.AddComplient(comp)).Returns(DummyData.AddComplaintBadRequest(comp));
+                //Arange
+                var result = await _controller.AddComplient(comp);
+                Assert.IsType<BadRequestObjectResult>(result);
+            }
+
+            [Fact]
+            public async Task RemoveDuplicatsFromEmployeeList_ShouldReturn200StatusCode()
+            {
+                //Act
+                _mock.Setup(x => x.GetAllComplients()).Returns(DummyData.RemoveDuplicate());
+                //Arrange
+                var result = (OkObjectResult)await _controller.GetAllEmployees();
+                //Assert
+                Assert.IsType<OkObjectResult>(result);
+                Assert.NotNull(result);
+                Assert.IsNotType<BadRequest>(result);
+            }
+
+    
     }
 }
