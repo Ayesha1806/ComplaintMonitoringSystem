@@ -35,6 +35,8 @@ namespace PrasentationLayer.Controllers
         [HttpGet("GetAllEmployess")]
         [Authorize(Roles ="Employee")]
         public async Task<ActionResult> GetAllEmployees()=>Ok(await _services.GetAllEmployees());
-
+        [HttpPut("UpdateingStatusOfComplient")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> StatusUpdate(string id) => Ok(await _services.Resolution(id));
     }
 }

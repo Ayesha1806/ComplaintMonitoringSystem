@@ -15,5 +15,6 @@ namespace DataAccessLayer.Repository.Contracts
         Task<Dictionary<string, int>> NumberOfComplaintsRaised(string employyeID);
         Task<ComplientBox> GetByComplientId(string Complientid);
         Task<IEnumerable<ComplientBox>> GetAllEmployees();
+        Task<string> Resolution(string complientid);
     }
 }

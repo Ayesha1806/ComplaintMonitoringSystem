@@ -64,10 +64,10 @@ namespace MVC.Controllers
                     {
                         string token = await response.Content.ReadAsStringAsync();
                         JWT jwt = JsonConvert.DeserializeObject<JWT>(token);
-                        if (jwt.Token == "Invalid credentials")
+                        if (jwt.Token != "Invalid credentials")
                         {
                             ViewBag.Message = "Incorrect UserID or Password!";
-                            return Redirect("~/Home/Index");
+                            return Redirect("~/Dashboard/Index");
                         }
                         HttpContext.Session.SetString("JWToken", jwt.Token);
                     }
@@ -77,7 +77,7 @@ namespace MVC.Controllers
             {
                 Ok(ex.Message);
             }
-            return Redirect("~/Dashboard/Index");
+            return Redirect("~/Home/Index");
         }
         public IActionResult Logoff()
         {
@@ -118,7 +118,7 @@ namespace MVC.Controllers
             var complaint = new ComplientBox();
             try
             {
-                HttpResponseMessage res = await client.GetAsync("api/Complaint/GetById?id=" + id);
+                HttpResponseMessage res = await client.GetAsync("api/Complaint/GetByComplientId?id=" + id);
                 if (res.IsSuccessStatusCode)
                 {
                     var result = res.Content.ReadAsStringAsync().Result;
