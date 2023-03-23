@@ -10,11 +10,40 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
+    <style>
+        .table, dd, tr, dt {
+                border: 1px solid rgb(78, 36, 36);
+
+            /* border-collapse: collapse; */
+               width: 25%;
+               margin-left: 200px;
+
+        }
+
+           th {
+                background-color: rgb(86, 177, 251);
+
+        }
+
+
+
+
+           tr {
+                background-color: rgb(131, 127, 187);
+                border-radius: 20px;
+
+        }
+
+           table {
+                margin-left: 28%;
+
+        }
+    </style>
 </head>
 <body>
 
 <div>
-    <h4>ComplientBox</h4>
+    <h4>Complients</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -86,8 +115,8 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-        <a asp-action="GetComplaints">Back to List</a>
+@*    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+*@        <a asp-action="GetComplaints">Back to List</a>
 </div>
 </body>
 </html>

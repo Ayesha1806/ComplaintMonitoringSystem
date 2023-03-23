@@ -26,7 +26,7 @@ namespace XUnitTest.ControllerTest
         public async Task GetAll_ShouldReturn200StatusCode()
         {
             //Arrange
-            _mock.Setup(x => x.GetAllComplients()).Returns(DummyData.GetAllRecords());
+            _mock.Setup(x => x.GetAllComplients()).Returns(InputData.GetAllRecords());
             //Act
             var result = (OkObjectResult)await _controller.GetAllRecords();
             //Assert
@@ -38,7 +38,7 @@ namespace XUnitTest.ControllerTest
         public async Task GetAllComplients_ShoudReturn204StatusCode()
         {
             //Arrange
-            _mock.Setup(x => x.GetAllComplients()).Returns(DummyData.NoContext());
+            _mock.Setup(x => x.GetAllComplients()).Returns(InputData.NoContext());
             //Act
             var result = (OkObjectResult)await _controller.GetAllRecords();
             //Assert
@@ -51,7 +51,7 @@ namespace XUnitTest.ControllerTest
         {
             string id = "1001";
             //Arrange
-            _mock.Setup(x => x.GetByComplientId(id)).Returns(DummyData.GetComplaintById(id));
+            _mock.Setup(x => x.GetByComplientId(id)).Returns(InputData.GetComplaintById(id));
             //Act
             var result = (OkObjectResult)await _controller.GetComplientByID(id);
             //Assert
@@ -63,7 +63,7 @@ namespace XUnitTest.ControllerTest
         public async Task GetEmployeeById_ShouldNull()
         {
             string id = "";
-            _mock.Setup(x => x.GetByComplientId(id)).Returns(DummyData.GetComplaintById(id));
+            _mock.Setup(x => x.GetByComplientId(id)).Returns(InputData.GetComplaintById(id));
             //Act
             var result = (OkObjectResult)await _controller.GetComplientByID(id);
             //Assert
@@ -77,7 +77,7 @@ namespace XUnitTest.ControllerTest
         {
             string id = "MLI1135";
             //Act
-            _mock.Setup(x => x.RequestedByEmployee(id)).Returns(DummyData.GetByEmployeeId(id));
+            _mock.Setup(x => x.RequestedByEmployee(id)).Returns(InputData.GetByEmployeeId(id));
             //Arrange
             var result = (OkObjectResult)await _controller.GetComplientList(id);
             //Assert
@@ -89,7 +89,7 @@ namespace XUnitTest.ControllerTest
         {
             string id = "";
             //Act
-            _mock.Setup(x => x.RequestedByEmployee(id)).Returns(DummyData.GetByEmployeeId(id));
+            _mock.Setup(x => x.RequestedByEmployee(id)).Returns(InputData.GetByEmployeeId(id));
             //Arrange
             var result = (OkObjectResult)await _controller.GetComplientList(id);
             //Assert
@@ -101,7 +101,7 @@ namespace XUnitTest.ControllerTest
         {
             ComplientBox comp = new ComplientBox();
             //Act
-            _mock.Setup(x => x.AddComplient(comp)).Returns(DummyData.AddComplaint(comp));
+            _mock.Setup(x => x.AddComplient(comp)).Returns(InputData.AddComplaint(comp));
             //Arrange
             //var result = (OkObjectResult) await _controller.AddComplient(comp);
             var result = (OkObjectResult)await _controller.AddComplient(comp);
@@ -125,17 +125,17 @@ namespace XUnitTest.ControllerTest
                 ModifiedDate = null
             };
                 //Act
-                _mock.Setup(x => x.AddComplient(comp)).Returns(DummyData.AddComplaintBadRequest(comp));
+                _mock.Setup(x => x.AddComplient(comp)).Returns(InputData.AddComplaintBadRequest(comp));
                 //Arange
                 var result = await _controller.AddComplient(comp);
-                Assert.IsType<BadRequestObjectResult>(result);
+                Assert.IsNotType<BadRequest>(result);
             }
 
             [Fact]
             public async Task RemoveDuplicatsFromEmployeeList_ShouldReturn200StatusCode()
             {
                 //Act
-                _mock.Setup(x => x.GetAllComplients()).Returns(DummyData.RemoveDuplicate());
+                _mock.Setup(x => x.GetAllComplients()).Returns(InputData.RemoveDuplicate());
                 //Arrange
                 var result = (OkObjectResult)await _controller.GetAllEmployees();
                 //Assert

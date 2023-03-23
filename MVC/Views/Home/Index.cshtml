@@ -5,27 +5,37 @@
 }
 <style>
 .row{
-    padding-left:65%;
-    padding-bottom : 60%;
-    display: grid;
+    /*padding-left:65%;
+    padding-bottom : 30%;
+    display: grid;*/
    /* grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
     grid-column-gap: 16px;
     grid-row-gap:30px;
     margin-top: 15px;*/
+    float :right;
+        margin-top: 18%;
+
+
+}
+h6{
+    color :blue;
 }
 .image{
-    padding-left:20%;
+    margin-right : 40%;
+    
 }
+
+   .www{
+       float : right;
+   }
+
 </style>
-<h3>user Motivity Microsoft authenticatio</h3>
- <li class="nav-item">
-   <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
- </li>
+  
  <div class="image">
 <img src="https://motivity.eazework.com/images/slide_1.png" />
-</div>
-<hr />
+
 <div class="row">
+        
     <div class="col-md-4">
         <form asp-action="LoginUser" asp-controller="Complaint">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -41,10 +51,23 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <br />
-            <div class="from-group">
+
                 <input type="submit" value="Login" class="btn btn-primary" />
+               
+                <div class="form-group">
+                    <p class="signup">Dont have account? <a href="@Url.Action("Register", "Home")" class="text-primary">Sign Up</a> now</p>
+                </div>
                 
-            </div>
+
+                                 
+                      
+   
+            @* <h6>If_Not_Register_User---------</h6>
+              <a class="nav-link text-dark" asp-controller="Home" asp-action="Register"><h6>Register</h6></a>*@
+
+@*                </ul>
+*@            
+               
            
             <label>@Html.Raw(ViewBag.Message)</label>
            

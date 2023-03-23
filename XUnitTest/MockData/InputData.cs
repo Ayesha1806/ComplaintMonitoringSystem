@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace XUnitTest.MockData
 {
-    public class DummyData
+    public class InputData
     {
        public static List<ComplientBox> data = new List<ComplientBox>()
         {
