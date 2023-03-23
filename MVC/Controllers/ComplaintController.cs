@@ -17,7 +17,6 @@ namespace MVC.Controllers
 {
     public class ComplaintController : Controller
     {
-        //ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;  
         public static string bseurl = "https://localhost:7152/";
         ApiUrls _api = new ApiUrls();
         public IActionResult Index()
@@ -66,10 +65,9 @@ namespace MVC.Controllers
                         JWT jwt = JsonConvert.DeserializeObject<JWT>(token);
                         if (jwt.Token != "Invalid credentials")
                         {
-                            ViewBag.Message = "Incorrect UserID or Password!";
+                            HttpContext.Session.SetString("JWToken", jwt.Token);
                             return Redirect("~/Dashboard/Index");
                         }
-                        HttpContext.Session.SetString("JWToken", jwt.Token);
                     }
                 }
             }
@@ -100,9 +98,21 @@ namespace MVC.Controllers
         public IActionResult Create(ComplientBox comp)
         {
             HttpClient client = _api.Initial();
+            ComplientBox complientBoxcomp = new ComplientBox()
+            {
+                Issue = comp.Issue,
+                EmployeeId = comp.EmployeeId,
+                ActiveFlag = true,
+                ComplientId = "123",
+                ComplientRaised = 0,
+                CreatedBy = "Ayesha",
+                CreatedDate = DateTime.Now,
+                Status = "Submited",
+                Resolution = "UnderProcessing"
+            };
             var accessToken = HttpContext.Session.GetString("JWToken");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var postTask = client.PostAsJsonAsync<ComplientBox>("api/Complaint/RaiseComplient", comp);
+            var postTask = client.PostAsJsonAsync<ComplientBox>("api/Complaint/RaiseComplient", complientBoxcomp);
             var result=postTask.Result;
             if(result.IsSuccessStatusCode)
             {

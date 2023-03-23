@@ -193,19 +193,18 @@ namespace DataAccessLayer.Repository.Services
         {
             try
             {
+                List<ComplientBox> list = new List<ComplientBox>();
                 var data = _context.ComplientBoxes.ToList();
-                List<ComplientBox> list = data.DistinctBy(x => x.EmployeeId).ToList();
-               // List<ComplientBox> list = new List<ComplientBox>();
                //return data.Union(data);
                 //var terms = .Split(' ').ToList();
                 foreach (ComplientBox u1 in data)
                 {
-                    //bool duplicatefound = false;
-                    //foreach (ComplientBox u2 in list)
-                    //    if (u1.EmployeeId == u2.EmployeeId)
-                    //        duplicatefound = true;
+                    bool duplicatefound = false;
+                    foreach (ComplientBox u2 in list)
+                        if (u1.EmployeeId == u2.EmployeeId)
+                            duplicatefound = true;
 
-                    //if (!duplicatefound)
+                    if (!duplicatefound)
                         list.Add(u1);
                 }
                 return list;
