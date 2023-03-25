@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLayer.Models
 {
@@ -15,9 +16,9 @@ namespace DataAccessLayer.Models
         public string? Name { get; set; }
         public string? NormalizedName { get; set; }
         public string? ConcurrencyStamp { get; set; }
-
+        [NotMapped]
         public virtual ICollection<AspNetRoleClaim> AspNetRoleClaims { get; set; }
-
+        [NotMapped]
         public virtual ICollection<AspNetUser> Users { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace DataAccessLayer.DbContext
         }
 
 
+        public virtual DbSet<ComplaintsOfEmployee> ComplaintsOfEmployees { get; set; } = null!;
         public virtual DbSet<ComplientBox> ComplientBoxes { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -33,8 +34,41 @@ namespace DataAccessLayer.DbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ComplaintsOfEmployee>(entity =>
+            {
+                entity.ToTable("ComplaintsOfEmployee");
+
+                entity.Property(e => e.ComplaintId).HasMaxLength(350);
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("date");
+
+                entity.Property(e => e.EmployeeId).HasMaxLength(50);
+
+                entity.Property(e => e.FullName).HasMaxLength(50);
+
+                entity.Property(e => e.Issue).HasMaxLength(50);
+
+                entity.Property(e => e.LoginId).HasMaxLength(450);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("date");
+
+                entity.Property(e => e.Resolutation).HasMaxLength(50);
+
+                entity.Property(e => e.Status).HasMaxLength(50);
+
+                entity.Property(e => e.Title).HasMaxLength(50);
+
+                entity.HasOne(d => d.Login)
+                    .WithMany(p => p.ComplaintsOfEmployees)
+                    .HasForeignKey(d => d.LoginId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ComplaintsOfEmployee_ComplaintsOfEmployee");
+            });
 
             modelBuilder.Entity<ComplientBox>(entity =>
             {

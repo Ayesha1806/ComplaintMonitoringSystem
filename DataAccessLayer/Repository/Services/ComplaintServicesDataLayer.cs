@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.DbContext;
+﻿using DataAccessLayer.AuthenticationModels;
+using DataAccessLayer.DbContext;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repository.Contracts;
 using GlobalEntity.Exceptions;
@@ -242,5 +243,12 @@ namespace DataAccessLayer.Repository.Services
                 complientid= null;
             }
         }
+       public async Task<List<ComplaintsOfEmployee>> GetRecords()
+        {
+            string quary = $"Select [LoginId],[EmployeeId],[FullName],[Issue] from ComplaintsOfEmployee Inner join  [dbo].[AspNetUsers] ON [dbo].[ComplaintsOfEmployee].LoginId=[dbo].[AspNetUsers].Id";
+            return await _context.ComplaintsOfEmployees.FromSqlRaw(quary).ToListAsync();
+           // return obj;
+        }
+        
     }
 }

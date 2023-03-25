@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLayer.Models
 {
@@ -10,6 +11,7 @@ namespace DataAccessLayer.Models
             AspNetUserClaims = new HashSet<AspNetUserClaim>();
             AspNetUserLogins = new HashSet<AspNetUserLogin>();
             AspNetUserTokens = new HashSet<AspNetUserToken>();
+            ComplaintsOfEmployees = new HashSet<ComplaintsOfEmployee>();
             Roles = new HashSet<AspNetRole>();
         }
 
@@ -28,10 +30,18 @@ namespace DataAccessLayer.Models
         public DateTimeOffset? LockoutEnd { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
-
+        [NotMapped]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
+        [NotMapped]
+
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
+        [NotMapped]
+
         public virtual ICollection<AspNetUserToken> AspNetUserTokens { get; set; }
+        [NotMapped]
+
+        public virtual ICollection<ComplaintsOfEmployee> ComplaintsOfEmployees { get; set; }
+        [NotMapped]
 
         public virtual ICollection<AspNetRole> Roles { get; set; }
     }

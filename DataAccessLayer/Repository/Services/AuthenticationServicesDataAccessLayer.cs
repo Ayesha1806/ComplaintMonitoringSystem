@@ -89,7 +89,7 @@ namespace DataAccessLayer.Repository.Services
             {
                 _logger.LogInformation("User Register");
                 _logger.LogDebug(model.Username, model.Password);
-                var user = await _userManager.FindByNameAsync(model.Username);
+                var  user = await _userManager.FindByNameAsync(model.Username);
                 if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
                     var userRoles = await _userManager.GetRolesAsync(user);
@@ -106,15 +106,21 @@ namespace DataAccessLayer.Repository.Services
                     TokenResponse tokenResponse = new TokenResponse();
                     tokenResponse.Token = new JwtSecurityTokenHandler().WriteToken(token);
                     //tokenResponse.Expire = token.ValidTo;
+                     tokenResponse.Username=username() ;
                     return tokenResponse;
                 }
                 return null;
             }
             catch (BadRequest)
             {
-                throw new BadRequest("Something Went Wrong!!!");
                 _logger.LogError("Something Went Wrong");
+                throw new BadRequest("Something Went Wrong!!!");
             }
+        }
+        public  string username()
+        {
+            string name="";
+            return name ;
         }
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
@@ -136,8 +142,8 @@ namespace DataAccessLayer.Repository.Services
             }
             catch (BadRequest)
             {
-                throw new BadRequest("Something Went Wrong!!!");
                 _logger.LogError("Something Went Wrong");
+                throw new BadRequest("Something Went Wrong!!!");
             }
         }
     }

@@ -16,5 +16,6 @@ namespace DataAccessLayer.Repository.Contracts
         Task<ComplientBox> GetByComplientId(string Complientid);
         Task<IEnumerable<ComplientBox>> GetAllEmployees();
         Task<string> Resolution(string complientid);
+        Task<List<ComplaintsOfEmployee>> GetRecords();
     }
 }

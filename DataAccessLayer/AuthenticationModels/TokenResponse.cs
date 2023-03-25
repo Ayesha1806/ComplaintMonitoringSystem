@@ -9,7 +9,8 @@ namespace DataAccessLayer.AuthenticationModels
     public class TokenResponse
     {
         public string? Token { get; set; }
-       // public DateTime Expire { get; set; }
+        public DateTime Expire { get; set; }
+        public string? Username { get; set;}
     }
     
 }

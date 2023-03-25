@@ -38,5 +38,7 @@ namespace PrasentationLayer.Controllers
         [HttpPut("UpdateingStatusOfComplient")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> StatusUpdate(string id) => Ok(await _services.Resolution(id));
+        [HttpGet("GetRecords")]
+        public async Task<ActionResult> GetRecords()=>Ok(await _services.GetRecords());
     }
 }
