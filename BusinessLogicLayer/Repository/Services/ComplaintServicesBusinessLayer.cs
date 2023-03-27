@@ -41,12 +41,6 @@ namespace BusinessLogicLayer.Repository.Services
         {
             return _services.GetRecords();
         }
-
-        public Task<Dictionary<string, int>> NumberOfComplaintsRaised(string employyeID)
-        {
-            return _services.NumberOfComplaintsRaised(employyeID);
-        }
-
         public Task<List<ComplientBox>> RequestedByEmployee(string employyeID)
         {
             return _services.RequestedByEmployee(employyeID);

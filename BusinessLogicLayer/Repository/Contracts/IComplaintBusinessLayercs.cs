@@ -13,7 +13,6 @@ namespace BusinessLogicLayer.Repository.Contracts
         Task<List<ComplientBox>> RequestedByEmployee(string employyeID);
         Task<List<ComplientBox>> GetAllComplients();
         Task<ComplientBox> GetByComplientId(string Complientid);
-        Task<Dictionary<string, int>> NumberOfComplaintsRaised(string employyeID);
         Task<IEnumerable<ComplientBox>> GetAllEmployees();
         Task<List<ComplaintsOfEmployee>> GetRecords();
 

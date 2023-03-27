@@ -170,26 +170,6 @@ namespace DataAccessLayer.Repository.Services
             }
         }
 
-        public async Task<Dictionary<string,int>> NumberOfComplaintsRaised(string employyeID)
-        {
-            var dictonary = new Dictionary<string, int>();
-            var data = _context.ComplientBoxes.ToList();
-           
-                int count = 0;
-                foreach (var complient in data)
-                {
-                    if (complient.EmployeeId.Equals(employyeID))
-                    {
-                        count++;
-                    }
-                }
-                dictonary.Add(employyeID, count);
-                count = 0;
-            
-            return dictonary;
-            
-        }
-
         public async Task<IEnumerable<ComplientBox>> GetAllEmployees()
         {
             try

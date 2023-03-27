@@ -20,8 +20,7 @@ namespace PrasentationLayer.Controllers
         [Authorize(Roles = "Employee")]
         public async Task<ActionResult> AddComplient(ComplientBox comp) => Ok(await _services.AddComplient(comp));
         [HttpGet("GetById")]
-        [Authorize(Roles = "Employee")]
-        
+        [Authorize(Roles = "Employee")]       
         public async Task<ActionResult> GetComplientList([FromQuery] string id) => Ok(await _services.RequestedByEmployee(id));
 
         [HttpGet("GetAllRecords")]
@@ -30,8 +29,6 @@ namespace PrasentationLayer.Controllers
         [HttpGet("GetByComplientId")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> GetComplientByID(string id) => Ok(await _services.GetByComplientId(id));
-        [HttpGet("CountOfComplaints")]
-        public async Task<ActionResult> GetCount(string id)=>Ok(_services.NumberOfComplaintsRaised(id));
         [HttpGet("GetAllEmployess")]
         [Authorize(Roles ="Employee")]
         public async Task<ActionResult> GetAllEmployees()=>Ok(await _services.GetAllEmployees());
