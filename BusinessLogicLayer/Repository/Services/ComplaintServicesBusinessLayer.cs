@@ -16,7 +16,6 @@ namespace BusinessLogicLayer.Repository.Services
         {
             _services = services;
         }
-
         public Task<ComplientBox> AddComplient(ComplientBox comp)
         {
             return _services.AddComplient(comp);

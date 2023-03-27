@@ -105,8 +105,7 @@ namespace DataAccessLayer.Repository.Services
                     var token = GetToken(authClaims);
                     TokenResponse tokenResponse = new TokenResponse();
                     tokenResponse.Token = new JwtSecurityTokenHandler().WriteToken(token);
-                    //tokenResponse.Expire = token.ValidTo;
-                     tokenResponse.Username=username() ;
+                    tokenResponse.Expire = token.ValidTo;
                     return tokenResponse;
                 }
                 return null;
@@ -117,17 +116,12 @@ namespace DataAccessLayer.Repository.Services
                 throw new BadRequest("Something Went Wrong!!!");
             }
         }
-        public  string username()
-        {
-            string name="";
-            return name ;
-        }
+        
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
             try
             {
                 _logger.LogInformation("User Register");
-                //_logger.LogDebug(authClaims);
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
                 var token = new JwtSecurityToken
                     (

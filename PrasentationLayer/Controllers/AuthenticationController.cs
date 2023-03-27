@@ -21,13 +21,7 @@ namespace PrasentationLayer.Controllers
         public async Task<IActionResult> Register(Register model) => Ok(await _services.Register(model));
         [HttpPost("Login")]
         public async Task<IActionResult> Login(Login model) => Ok(await _services.Login(model));
-        [HttpGet("LoginUserName")]
-        [Authorize(Roles ="Employee")]
-        public async Task<ActionResult> LoginUserName()
-        {
-            string name = HttpContext.User.FindFirstValue("UserName");
-            return Ok(name);
-        }
+       
 
     }
 }

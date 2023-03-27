@@ -50,8 +50,6 @@ namespace MVC.Controllers
             return View(complient);
         }
        
-       
-
         public async Task<IActionResult> LoginUser(Login user)
         {
             try
@@ -172,34 +170,7 @@ namespace MVC.Controllers
             }
             return View(complient);
         }
-        public async Task<IActionResult> GetComplaintCount(string id)
-        {
-            HttpClient client = _api.Initial();
-            
-            Dictionary<string, int> complient = new Dictionary<string, int>();
-            try
-            {
-                HttpResponseMessage res = await client.GetAsync("api/Complient/CountOfComplaints?id=" + id);
-                if (res.IsSuccessStatusCode)
-                {
-                    var result = res.Content.ReadAsStringAsync().Result;
-                    // complient = JsonConvert.DeserializeObject<Dictionary<string,int>>(result);
-                    // ViewBag.result=result;
-                    //complient.Add()
-                    return View(complient);
-                }
-            }
-            catch (Exception ex)
-            {
-                Ok(ex.Message);
-            }
-            finally
-            {
-                client.Dispose();
-                //complaint = null;
-            }
-            return View(complient);
-        }
+       
         public async Task<IActionResult> EmployeeComplients()
         {
             HttpClient client = _api.Initial();
