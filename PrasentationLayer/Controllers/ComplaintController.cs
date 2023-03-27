@@ -32,7 +32,5 @@ namespace PrasentationLayer.Controllers
         [HttpGet("GetAllEmployess")]
         [Authorize(Roles ="Employee")]
         public async Task<ActionResult> GetAllEmployees()=>Ok(await _services.GetAllEmployees());
-        [HttpGet("GetRecords")]
-        public async Task<ActionResult> GetRecords()=>Ok(await _services.GetRecords());
     }
 }

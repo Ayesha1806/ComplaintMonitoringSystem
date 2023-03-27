@@ -36,11 +36,6 @@ namespace BusinessLogicLayer.Repository.Services
         {
             return _services.GetByComplientId(Complientid);
         }
-
-        public Task<List<ComplaintsOfEmployee>> GetRecords()
-        {
-            return _services.GetRecords();
-        }
         public Task<List<ComplientBox>> RequestedByEmployee(string employyeID)
         {
             return _services.RequestedByEmployee(employyeID);

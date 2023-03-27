@@ -14,7 +14,6 @@ namespace BusinessLogicLayer.Repository.Contracts
         Task<List<ComplientBox>> GetAllComplients();
         Task<ComplientBox> GetByComplientId(string Complientid);
         Task<IEnumerable<ComplientBox>> GetAllEmployees();
-        Task<List<ComplaintsOfEmployee>> GetRecords();
 
     }
 }

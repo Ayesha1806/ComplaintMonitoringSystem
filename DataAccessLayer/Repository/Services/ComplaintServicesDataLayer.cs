@@ -92,7 +92,7 @@ namespace DataAccessLayer.Repository.Services
         }
         public ComplientBox GetByEmployyeID(string employyeID)
         {
-            _logger.LogInformation("Getting Data ById");
+            _logger.LogInformation("Getting Data By Employee Id");
             _logger.LogDebug(employyeID);
             try
             {
@@ -154,7 +154,8 @@ namespace DataAccessLayer.Repository.Services
 
         public async Task<ComplientBox> GetByComplientId(string Complientid)
         {
-            _logger.LogInformation("Complient Raised");
+            _logger.LogInformation("Get Complient By Id");
+            _logger.LogDebug(Complientid);
             try
             {
                 if (Complientid!=null)
@@ -194,14 +195,5 @@ namespace DataAccessLayer.Repository.Services
             }
         }
        
-       public async Task<List<ComplaintsOfEmployee>> GetRecords()
-        {
-
-            // string quary = $"Select [LoginId],[EmployeeId],[FullName],[Issue] from ComplaintsOfEmployee Inner join  [dbo].[AspNetUsers] ON [dbo].[ComplaintsOfEmployee].LoginId=[dbo].[AspNetUsers].Id";
-            string query = $"Select EmployeeId,FullName,Issue from [dbo].[ComplaintsOfEmployee] inner join [dbo].[AspNetUsers] on AspNetUsers.UserName=ComplaintsOfEmployee.FullName";
-            return await _context.ComplaintsOfEmployees.FromSqlRaw(query).ToListAsync();
-           // return obj;
-        }
-        
     }
 }
