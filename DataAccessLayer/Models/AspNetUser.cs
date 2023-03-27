@@ -33,16 +33,12 @@ namespace DataAccessLayer.Models
         [NotMapped]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         [NotMapped]
-
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         [NotMapped]
-
         public virtual ICollection<AspNetUserToken> AspNetUserTokens { get; set; }
         [NotMapped]
-
         public virtual ICollection<ComplaintsOfEmployee> ComplaintsOfEmployees { get; set; }
         [NotMapped]
-
         public virtual ICollection<AspNetRole> Roles { get; set; }
     }
 }

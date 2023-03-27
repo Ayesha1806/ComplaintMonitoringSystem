@@ -51,10 +51,5 @@ namespace BusinessLogicLayer.Repository.Services
         {
             return _services.RequestedByEmployee(employyeID);
         }
-
-        public Task<string> Resolution(string complientid)
-        { 
-            return _services.Resolution(complientid);
-        }
     }
 }

@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace DataAccessLayer.Models
 {
-    [Keyless]
     public partial class AspNetUserLogin
     {
         public string LoginProvider { get; set; } = null!;

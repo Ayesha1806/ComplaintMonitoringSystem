@@ -3,37 +3,6 @@
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
 }
-@*<style>
-.row{
-    /*padding-left:65%;
-    padding-bottom : 30%;
-    display: grid;*/
-   /* grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-    grid-column-gap: 16px;
-    grid-row-gap:30px;
-    margin-top: 15px;*/
-    float :right;
-        margin-top: 18%;
-
-
-}
-h6{
-    color :blue;
-}
-.image{
-    margin-right : 40%;
-    
-}
-
-   .www{
-       float : right;
-   }
-
-</style>
-  *@
-@* <div class="image">
-<img src="https://motivity.eazework.com/images/slide_1.png" />*@
-
 
             <section class="vh-100">
                 <div class="container-fluid h-custom">
@@ -45,22 +14,11 @@ h6{
                         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                         <form asp-action="LoginUser" asp-controller="Complaint">
                             <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                                    <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-                                    <button type="button" class="btn btn-primary btn-floating mx-1">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </button>
-
-                                    <button type="button" class="btn btn-primary btn-floating mx-1">
-                                        <i class="fab fa-twitter"></i>
-                                    </button>
-
-                                    <button type="button" class="btn btn-primary btn-floating mx-1">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </button>
+                                   
                                 </div>
 
                                 <div class="divider d-flex align-items-center my-4">
-                                    <p class="text-center fw-bold mx-3 mb-0">Or</p>
+                                    <p class="text-center fw-bold mx-3 mb-0">Welcome Users</p>
                                 </div>
 
                                 <!-- Email input -->
@@ -104,39 +62,13 @@ h6{
                         </div>
                     </div>
                 </div>
-                <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-                    <!-- Copyright -->
-                    <div class="text-white mb-3 mb-md-0">
-                        Copyright © 2020. All rights reserved.
-                    </div>
-                    <!-- Copyright -->
-                    <!-- Right -->
-                    <div>
-                        <a href="#!" class="text-white me-4">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#!" class="text-white me-4">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#!" class="text-white me-4">
-                            <i class="fab fa-google"></i>
-                        </a>
-                        <a href="#!" class="text-white">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
-                    <!-- Right -->
+              
                 </div>
             </section>
    
-            @* <h6>If_Not_Register_User---------</h6>
-              <a class="nav-link text-dark" asp-controller="Home" asp-action="Register"><h6>Register</h6></a>*@
-
-@*                </ul>
-*@            
+            
                
-           
-            <label>@Html.Raw(ViewBag.Message)</label>
+<label>@Html.Raw(ViewBag.Message)</label>
            
         
 

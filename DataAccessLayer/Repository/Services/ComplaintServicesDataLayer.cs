@@ -196,8 +196,6 @@ namespace DataAccessLayer.Repository.Services
             {
                 List<ComplientBox> list = new List<ComplientBox>();
                 var data = _context.ComplientBoxes.ToList();
-               //return data.Union(data);
-                //var terms = .Split(' ').ToList();
                 foreach (ComplientBox u1 in data)
                 {
                     bool duplicatefound = false;
@@ -209,44 +207,19 @@ namespace DataAccessLayer.Repository.Services
                         list.Add(u1);
                 }
                 return list;
-                //return list.DistinctBy(i => i.EmployeeId).ToList();
             }
             catch (Exception e)
             {
                 throw new BadRequest("Server Error!!!");
             }
         }
-        public async Task<string> Resolution(string complientid)
-        {
-            _logger.LogInformation("Updating the Status By Admin");
-            _logger.LogDebug(complientid);
-            try
-            {
-                var data = _context.ComplientBoxes.FirstOrDefault(x => x.ComplientId == complientid);
-                if (data != null)
-                {
-                    var query = $"update[dbo].[ComplientBox]  set Resolution='Solved' where ComplientId='{complientid}'";
-                    _context.ComplientBoxes.FromSqlRaw(query);
-                    _context.SaveChanges();
-
-                    return "Record Updated Sucessfully";
-                }
-                return "Something Went Wrong!!!!";
-            }
-            catch(Exception e)
-            {
-                _logger.LogError(e.Message, e.InnerException, e.StackTrace);
-                throw new BadRequest(e.Message);
-            }
-            finally
-            {
-                complientid= null;
-            }
-        }
+       
        public async Task<List<ComplaintsOfEmployee>> GetRecords()
         {
-            string quary = $"Select [LoginId],[EmployeeId],[FullName],[Issue] from ComplaintsOfEmployee Inner join  [dbo].[AspNetUsers] ON [dbo].[ComplaintsOfEmployee].LoginId=[dbo].[AspNetUsers].Id";
-            return await _context.ComplaintsOfEmployees.FromSqlRaw(quary).ToListAsync();
+
+            // string quary = $"Select [LoginId],[EmployeeId],[FullName],[Issue] from ComplaintsOfEmployee Inner join  [dbo].[AspNetUsers] ON [dbo].[ComplaintsOfEmployee].LoginId=[dbo].[AspNetUsers].Id";
+            string query = $"Select EmployeeId,FullName,Issue from [dbo].[ComplaintsOfEmployee] inner join [dbo].[AspNetUsers] on AspNetUsers.UserName=ComplaintsOfEmployee.FullName";
+            return await _context.ComplaintsOfEmployees.FromSqlRaw(query).ToListAsync();
            // return obj;
         }
         

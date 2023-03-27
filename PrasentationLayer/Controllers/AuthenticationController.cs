@@ -1,7 +1,10 @@
 ﻿using BusinessLogicLayer.Repository.Contracts;
 using DataAccessLayer.AuthenticationModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System.Security.Claims;
 
 namespace PrasentationLayer.Controllers
 {
@@ -18,6 +21,13 @@ namespace PrasentationLayer.Controllers
         public async Task<IActionResult> Register(Register model) => Ok(await _services.Register(model));
         [HttpPost("Login")]
         public async Task<IActionResult> Login(Login model) => Ok(await _services.Login(model));
+        [HttpGet("LoginUserName")]
+        [Authorize(Roles ="Employee")]
+        public async Task<ActionResult> LoginUserName()
+        {
+            string name = HttpContext.User.FindFirstValue("UserName");
+            return Ok(name);
+        }
 
     }
 }
