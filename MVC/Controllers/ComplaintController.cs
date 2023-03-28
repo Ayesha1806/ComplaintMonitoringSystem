@@ -17,7 +17,6 @@ namespace MVC.Controllers
 {
     public class ComplaintController : Controller
     {
-        public static string bseurl = "https://localhost:7152/";
         ApiUrls _api = new ApiUrls();
         public IActionResult Index()
         {
@@ -144,7 +143,7 @@ namespace MVC.Controllers
             }
             return View();
         }
-            public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string id)
         {
             HttpClient client = _api.Initial();
             var accessToken = HttpContext.Session.GetString("JWToken");
