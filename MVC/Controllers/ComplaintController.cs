@@ -96,19 +96,26 @@ namespace MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                string baseURL = "https://localhost:7152/";
-                using (var client = new HttpClient())
+                try
                 {
-                    client.BaseAddress = new Uri(baseURL);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    string strPayload = JsonConvert.SerializeObject(register);
-                    HttpContent context = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                    var response = client.PostAsync("api/Authentication/Register", context).Result;
-                    if (response.IsSuccessStatusCode)
+                    string baseURL = "https://localhost:7152/";
+                    using (var client = new HttpClient())
                     {
-                        return Redirect("~/Complaint/LoginUser");
+                        client.BaseAddress = new Uri(baseURL);
+                        client.DefaultRequestHeaders.Accept.Clear();
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        string strPayload = JsonConvert.SerializeObject(register);
+                        HttpContent context = new StringContent(strPayload, Encoding.UTF8, "application/json");
+                        var response = client.PostAsync("api/Authentication/Register", context).Result;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return Redirect("~/Complaint/LoginUser");
+                        }
                     }
+                }
+                catch(Exception ex)
+                {
+                    Ok(ex.Message);
                 }
             }
             return View();
@@ -121,25 +128,36 @@ namespace MVC.Controllers
         public IActionResult Create(ComplientBox comp)
         {
             HttpClient client = _api.Initial();
-            ComplientBox complientBoxcomp = new ComplientBox()
+            try
             {
-                Issue = comp.Issue,
-                EmployeeId = comp.EmployeeId,
-                ActiveFlag = true,
-                ComplientId = "123",
-                ComplientRaised = 0,
-                CreatedBy = "Ayesha",
-                CreatedDate = DateTime.Now,
-                Status = "Submited",
-                Resolution = "UnderProcessing"
-            };
-            var accessToken = HttpContext.Session.GetString("JWToken");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var postTask = client.PostAsJsonAsync<ComplientBox>("api/Complaint/RaiseComplient", complientBoxcomp);
-            var result=postTask.Result;
-            if(result.IsSuccessStatusCode)
+                ComplientBox complientBoxcomp = new ComplientBox()
+                {
+                    Issue = comp.Issue,
+                    EmployeeId = comp.EmployeeId,
+                    ActiveFlag = true,
+                    ComplientId = "123",
+                    ComplientRaised = 0,
+                    CreatedBy = "Ayesha",
+                    CreatedDate = DateTime.Now,
+                    Status = "Submited",
+                    Resolution = "UnderProcessing"
+                };
+                var accessToken = HttpContext.Session.GetString("JWToken");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                var postTask = client.PostAsJsonAsync<ComplientBox>("api/Complaint/RaiseComplient", complientBoxcomp);
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("EmployeeComplients");
+                }
+            }
+            catch(Exception ex)
             {
-                return RedirectToAction("EmployeeComplients");
+                Ok(ex.Message);
+            }
+            finally
+            {
+                client.Dispose();
             }
             return View();
         }
@@ -165,7 +183,6 @@ namespace MVC.Controllers
             finally
             {
                 client.Dispose();
-                //complaint = null;
             }
             return View(complaint);
         }
@@ -191,7 +208,6 @@ namespace MVC.Controllers
             finally
             {
                 client.Dispose();
-                //complaint = null;
             }
             return View(complient);
         }

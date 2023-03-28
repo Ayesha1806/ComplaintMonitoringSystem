@@ -83,7 +83,6 @@ namespace XUnitTest.MockData
         }
         public async static Task<ComplientBox> GetComplaintById(string id)
         {
-            //List<ComplientBox> comp =  GetComplaints();
             var Data= data.FirstOrDefault(x=>x.ComplientId==id);
             if (Data != null)
             {
@@ -120,7 +119,7 @@ namespace XUnitTest.MockData
         }
         public async static Task<ComplientBox> AddComplaintBadRequest(ComplientBox comp)
         {
-            return new ComplientBox
+            return  new ComplientBox
             {
                 EmployeeId = "MLI1135",
                 Issue = "Issue with laptop",
@@ -147,7 +146,7 @@ namespace XUnitTest.MockData
                 if (!duplicatefound)
                     list.Add(u1);
             }
-            return list;
+            return  list;
         }
     }
 }
