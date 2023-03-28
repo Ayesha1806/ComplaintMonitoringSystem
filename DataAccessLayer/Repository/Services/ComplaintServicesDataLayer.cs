@@ -86,9 +86,7 @@ namespace DataAccessLayer.Repository.Services
             {
                 _logger.LogError(e.Message, e.StackTrace, e.InnerException);
                 throw new ServerError("Something Went Wrong!!!");
-            }
-           // return Convert.ToInt16($"SELECT Count(EmployeeId) as NumberOfComplaints FROM [dbo].[ComplientBox] WHERE EmployeeId='{EmployeeID}'");
-            
+            }            
         }
         public ComplientBox GetByEmployyeID(string employyeID)
         {
