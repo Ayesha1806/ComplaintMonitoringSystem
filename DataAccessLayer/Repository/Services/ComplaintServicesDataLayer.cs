@@ -57,6 +57,7 @@ namespace DataAccessLayer.Repository.Services
                 _logger.LogError(e.Message,e.InnerException,e.StackTrace);
                 throw new BadRequest("Server Error!!!");
             }
+           
         }
         public int NumberOfComplients(string EmployeeID)
         {

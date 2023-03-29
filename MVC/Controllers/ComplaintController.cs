@@ -116,6 +116,8 @@ namespace MVC.Controllers
                             TempData["AlertMessage"] = "User Created Sucessfully";
                             return Redirect("Register");
                         }
+                        ViewData["LoginFlag"] = "Invalid Entries!!!Please check the details.";
+                        return View();
                     }
                     return View(register);
                 }
