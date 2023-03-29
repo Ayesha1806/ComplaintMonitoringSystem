@@ -60,11 +60,14 @@ namespace MVC.Controllers
                     {
                         string token = await response.Content.ReadAsStringAsync();
                         JWT jwt = JsonConvert.DeserializeObject<JWT>(token);
-                        if (jwt.Token != "Invalid credentials")
+
+                        if (jwt != null)
                         {
                             HttpContext.Session.SetString("JWToken", jwt.Token);
                             return Redirect("~/Dashboard/Index");
                         }
+                        ViewData["LoginFlag"] = "Invalid user name or password";
+                        return View();
                     }
                 }
             }
@@ -72,7 +75,8 @@ namespace MVC.Controllers
             {
                 Ok(ex.Message);
             }
-            return Redirect("~/Home/Index");
+            return View();
+            // return Redirect("~/Home/Index");
         }
         public IActionResult Logoff()
         {
@@ -109,11 +113,13 @@ namespace MVC.Controllers
                         var response = client.PostAsync("api/Authentication/Register", context).Result;
                         if (response.IsSuccessStatusCode)
                         {
-                            return Redirect("~/Complaint/LoginUser");
+                            TempData["AlertMessage"] = "User Created Sucessfully";
+                            return Redirect("Register");
                         }
                     }
+                    return View(register);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Ok(ex.Message);
                 }
