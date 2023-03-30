@@ -59,12 +59,21 @@ namespace MVC.Controllers
                     using (var response = await httpClient.PostAsync("https://localhost:7152/api/Authentication/Login", stringContent))
                     {
                         string token = await response.Content.ReadAsStringAsync();
+                        
                         JWT jwt = JsonConvert.DeserializeObject<JWT>(token);
-
+                        
                         if (jwt != null)
                         {
-                            HttpContext.Session.SetString("JWToken", jwt.Token);
-                            return Redirect("~/Dashboard/Index");
+                            if (jwt.Role == "Admin")
+                            {
+                                HttpContext.Session.SetString("JWToken", jwt.Token);
+                                return Redirect("~/Dashboard/Index");
+                            }
+                            else if(jwt.Role=="Employee")
+                            {
+                                HttpContext.Session.SetString("JWToken", jwt.Token);
+                                return Redirect("~/Dashboard/Index1");
+                            }
                         }
                         ViewData["LoginFlag"] = "Invalid user name or password";
                         return View();

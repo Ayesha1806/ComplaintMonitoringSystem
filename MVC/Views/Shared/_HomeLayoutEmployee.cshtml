@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,7 +9,7 @@
     <link rel="stylesheet" href="~/MVC.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
+     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Complaint Monitoring System</a>
@@ -20,13 +19,14 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                    </ul>
+                        </ul>
+                   @* </ul>
                     <ul class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="GetComplaints">Admin</a>
-                    </ul>
-                    @*<ul class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="EmployeeComplients">Employee</a>
                     </ul>*@
+                    <ul class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="EmployeeComplients">Employee</a>
+                    </ul>
                     <ul class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="Logoff" style="float:right;">Logoff</a>
                     </ul>
@@ -50,12 +50,12 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            Motivity Labs <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-  </body>
+</body>
 </html>

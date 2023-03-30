@@ -87,7 +87,7 @@ namespace DataAccessLayer.Repository.Services
         {
             try
             {
-                _logger.LogInformation("User Register");
+                _logger.LogInformation("User Login");
                 _logger.LogDebug(model.Username, model.Password);
                 var  user = await _userManager.FindByNameAsync(model.Username);
                 if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
@@ -106,6 +106,7 @@ namespace DataAccessLayer.Repository.Services
                     TokenResponse tokenResponse = new TokenResponse();
                     tokenResponse.Token = new JwtSecurityTokenHandler().WriteToken(token);
                     tokenResponse.Expire = token.ValidTo;
+                    tokenResponse.Role = userRoles.FirstOrDefault();
                     return tokenResponse;
                 }
                 return null;
