@@ -111,7 +111,7 @@ namespace MVC.Controllers
                         string strPayload = JsonConvert.SerializeObject(register);
                         HttpContent context = new StringContent(strPayload, Encoding.UTF8, "application/json");
                         var response = client.PostAsync("api/Authentication/Register", context).Result;
-                        if (response!=null)
+                        if (response!=null && response.StatusCode.ToString()=="OK")
                         {
                             TempData["AlertMessage"] = "User Created Sucessfully";
                             return Redirect("Register");

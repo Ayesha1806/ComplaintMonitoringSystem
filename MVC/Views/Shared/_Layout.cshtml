@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,18 +24,19 @@
                     <ul class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="GetComplaints">Admin</a>
                     </ul>
-                     <ul class="nav-item">
+                    <ul class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="EmployeeComplients">Employee</a>
                     </ul>
                     <ul class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="Logoff" style="float:right;">Logoff</a>
                     </ul>
-                   @* <ul>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            if(
-                        }
-                    </ul>*@
+                  @* <li>
+                            @if (User.HasClaim(ClaimTypes.Role, "Admin"))
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="GetComplaints">Admin</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="Logoff" style="float:right;">Logoff</a>
+                            }
+                    </li>*@
 
                 </div>
             </div>
@@ -55,5 +57,5 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-</body>
+  </body>
 </html>
