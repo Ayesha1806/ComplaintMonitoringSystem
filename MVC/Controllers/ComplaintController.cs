@@ -64,16 +64,29 @@ namespace MVC.Controllers
                         
                         if (jwt != null)
                         {
+                            //if (jwt.Role == "Admin")
+                            //{
+                            //    HttpContext.Session.SetString("JWToken", jwt.Token);
+                            //    return Redirect("~/Dashboard/Index");
+                            //}
+                            //else if(jwt.Role=="Employee")
+                            //{
+                            //    HttpContext.Session.SetString("JWToken", jwt.Token);
+                            //    return Redirect("~/Dashboard/Index1");
+                            //}
                             if (jwt.Role == "Admin")
                             {
                                 HttpContext.Session.SetString("JWToken", jwt.Token);
+                                TempData["Role"] = "Admin";
                                 return Redirect("~/Dashboard/Index");
                             }
-                            else if(jwt.Role=="Employee")
+                            if (jwt.Role == "Employee")
                             {
                                 HttpContext.Session.SetString("JWToken", jwt.Token);
-                                return Redirect("~/Dashboard/Index1");
+                                TempData["Role"] = null;
+                                return Redirect("~/Dashboard/Index");
                             }
+
                         }
                         ViewData["LoginFlag"] = "Invalid user name or password";
                         return View();

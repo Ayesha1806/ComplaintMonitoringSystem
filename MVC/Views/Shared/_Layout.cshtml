@@ -21,22 +21,26 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                     </ul>
-                    <ul class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="GetComplaints">Admin</a>
+                    @if (TempData["Role"]!=null)
+                    {
+                        <ul class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="GetComplaints">Admin</a>
+                        </ul>
+                       
+                    }
+
+                    @if (TempData["Role"]==null)
+                    {
+                        <ul class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="EmployeeComplients">Employee</a>
                     </ul>
-                    @*<ul class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="EmployeeComplients">Employee</a>
-                    </ul>*@
+                    
+                    }
                     <ul class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="Logoff" style="float:right;">Logoff</a>
                     </ul>
-                  @* <li>
-                            @if (User.HasClaim(ClaimTypes.Role, "Admin"))
-                            {
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="GetComplaints">Admin</a>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Complaint" asp-action="Logoff" style="float:right;">Logoff</a>
-                            }
-                    </li>*@
+                    
+                  
 
                 </div>
             </div>
